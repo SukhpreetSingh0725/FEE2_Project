@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OpenAI Chat App</title>
+  <style>
+    /* Reset + Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to right, #001219, #203a43, #2c5364);
+      color: white;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: #1c1717;
+      position: relative;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* Nav Links */
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+    .nav-links a::after {
+            content: '';
+            width: 0%;
+            height: 2px;
+            background: #04f2e2;
+            display: block;
+            margin: auto;
+            transition: 0.5s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+    
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+
+    }
+
+    /* Checkbox Trick */
+    .menu-toggle {
+      display: none;
+   
+    }
+
+    /* Responsive Nav */
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-direction: column;
+        background-color: rgba(0,0,0,0.5);
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        display: none;
+        padding: 1rem;
+      }
+
+      .menu-toggle:checked + .hamburger + .nav-links {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    /* Hero Section */
+    .hero-section {
+      height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .start-button {
+      padding: 0.8rem 1.5rem;
+      background-color: #00aaff;
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .start-button:hover {
+      background-color: #008fcc;
+    }
+
+    /* Mobile Hero Text */
+    @media (max-width: 600px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+    }
+
+    /* Form Styles */
+    .form-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80vh;
+      padding: 2rem;
+    }
+
+    .form-box {
+      background-color: #1f1f1f;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-box h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #00aaff;
+    }
+
+    .form-box input {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #333;
+      background-color: #141414;
+      color: white;
+    }
+
+    .form-box input:focus {
+      outline: none;
+      border-color: #00aaff;
+    }
+
+    .form-box button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #00aaff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .form-box button:hover {
+      background-color: #008fcc;
+    }
+
+    /* Link Styling */
+    .link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: #00aaff;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+    /*Add New*/
+    /* .container{max-width:900px;margin:48px auto;padding:28px}
+    h1{margin:0;font-size:28px}
+    p.lead{color:var(--muted);margin-top:8px;line-height:1.6}
+    .card{background:var(--card);border-radius:12px;padding:20px;margin-top:20px;box-shadow:0 6px 18px rgba(12,18,30,0.06)}
+    h2{margin-top:0}
+    ul.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;padding:0;margin:12px 0 0 0;list-style:none}
+    li.feature{border:1px solid #eef2ff;background:#248a8e;padding:12px;border-radius:8px}
+    .muted{color:var(--muted);font-size:15px}
+    footer{margin-top:28px;color:var(--muted);font-size:14px} */
+/* About Section */
+#about {
+  max-width: 720px;
+  margin: 10rem auto 6rem auto;
+  padding: 2.5rem 3rem;
+  background: rgba(30, 30, 30, 0.85);
+  border-radius: 16px;
+  box-shadow:
+    0 8px 32px 0 rgba(0, 0, 0, 0.7),
+    0 0 15px 5px rgba(0, 229, 255, 0.3);
+  backdrop-filter: blur(10px);
+  color: #cdd6f4;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+#about h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ffbb;
+}
+
+#about .about-content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: justify;
+}
+
+/* Responsive About Section */
+@media (max-width: 600px) {
+  #about {
+    margin: 10rem 1rem 4rem 1rem;
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+  }
+
+  #about h1 {
+    font-size: 2rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">ChatGPT App</div>
+
+    <!-- Hamburger Checkbox -->
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+    <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+    <!-- Navigation Links -->
+    <nav class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="Chat.html">Chat</a>
+      <a href="About.html">About</a>
+     <a href="contact.html">Contact</a>
+      <a href="Login.html">Login</a>
+   
+    </nav>
+  </header>
+ 
+<!-- About -->
+  <section id="about">
+    <h1>About</h1>
+    <p>This app lets you chat with OpenAI's GPT model. It’s a demo single-page app with sign in, sign up, and chat features.</p>
+  </section>
+
+
+</body>
+</html>
