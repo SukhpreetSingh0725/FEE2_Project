@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login/Signup Flip Card</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background: #0c192c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 400px;
+    height: 500px;
+    perspective: 1000px;
+    position: relative;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.form-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: rgba(147, 149, 151, 0.2);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-container h1 {
+    margin-bottom: 20px;
+    color: orange;
+}
+
+.form-container input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+.form-container button {
+    width: 50%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    background-color: orange;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.form-container a {
+    margin-top: 10px;
+    color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.signup-container {
+    transform: rotateY(180deg);
+}
+
+/* Social icons */
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.social-icons a {
+    color: orange;
+    font-size: 20px;
+}
+
+/* Responsive */
+@media (max-width: 450px){
+    .container {
+        width: 90%;
+        height: auto;
+    }
+    .form-container input {
+        width: 90%;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card" id="card">
+        <!-- LOGIN FORM -->
+        <div class="form-container login-container">
+            <h1>Login</h1>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <input type="email" placeholder="Email" id="loginEmail" required>
+            <input type="password" placeholder="Password" id="loginPassword" required>
+            <input type="password" placeholder="Confirm Password" id="loginConfirmPassword" required>
+            <button id="loginBtn">Login</button>
+            <a id="toSignup">Don't have an account? Sign Up</a>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div class="form-container signup-container">
+            <h1>Sign Up</h1>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-google-plus-g"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
+            <input type="text" placeholder="Full Name" id="signupName" required>
+            <input type="email" placeholder="Email" id="signupEmail" required>
+            <input type="password" placeholder="Password" id="signupPassword" required>
+            <input type="password" placeholder="Confirm Password" id="signupConfirmPassword" required>
+            <button id="signupBtn">Sign Up</button>
+            <a id="toLogin">Already have an account? Login</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Flip card to signup
+const card = document.getElementById('card');
+document.getElementById('toSignup').addEventListener('click', () => card.classList.add('flip'));
+document.getElementById('toLogin').addEventListener('click', () => card.classList.remove('flip'));
+
+// LOGIN validation
+document.getElementById('loginBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const confirm = document.getElementById('loginConfirmPassword').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(!email || !password || !confirm){
+        alert('All fields are mandatory!');
+        return;
+    }
+    if(!emailRegex.test(email)){
+        alert('Enter valid email!');
+        return;
+    }
+    if(password !== confirm){
+        alert('Passwords do not match!');
+        return;
+    }
+    alert('Login Successful!');
+});
+
+// SIGNUP validation
+document.getElementById('signupBtn').addEventListener('click', function(e){
+    e.preventDefault();
+    const name = document.getElementById('signupName').value.trim();
+    const email = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value.trim();
+    const confirm = document.getElementById('signupConfirmPassword').value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(!name || !email || !password || !confirm){
+        alert('All fields are mandatory!');
+        return;
+    }
+    if(!emailRegex.test(email)){
+        alert('Enter valid email!');
+        return;
+    }
+    if(password !== confirm){
+        alert('Passwords do not match!');
+        return;
+    }
+    alert('Signup Successful!');
+});
+</script>
+
+</body>
+</html>
