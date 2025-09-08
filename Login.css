@@ -1,6 +1,6 @@
 body {
     font-family: 'Times New Roman', Times, serif;
-    background: #0c192c;
+    background: linear-gradient(to right, #001219, #203a43, #2c5364);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -42,11 +42,12 @@ body {
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    text-shadow: 0 0 10px #00e5ffbb;
 }
 
 .form-container h1 {
     margin-bottom: 20px;
-    color: orange;
+    color: #00e5ff;
 }
 
 .form-container input {
@@ -63,7 +64,7 @@ body {
     padding: 10px;
     margin-top: 15px;
     border: none;
-    background-color: orange;
+    background-color: #00e5ff;
     color: #fff;
     font-weight: bold;
     cursor: pointer;
@@ -72,7 +73,7 @@ body {
 
 .form-container a {
     margin-top: 10px;
-    color: orange;
+    color: #00e5ff;
     cursor: pointer;
 }
 
@@ -87,7 +88,7 @@ body {
     margin-bottom: 15px;
 }
 .social-icons a {
-    color: orange;
+    color: #00e5ff;
     font-size: 20px;
 }
 
