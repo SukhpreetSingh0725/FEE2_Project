@@ -3,7 +3,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'; // <-- ADD THIS IMPORT
 
-import Header from './components/Header'; 
+import Header from './components/Header';
+import Footer from './components/Footer'; 
 
 // 1. IMPORT ALL YOUR PAGE COMPONENTS (MUST BE CREATED IN src/pages)
 import HomePage from './pages/HomePage';
@@ -36,6 +37,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>
+      <Footer />
       
       {/* You can add a Footer component here later */}
     </>
