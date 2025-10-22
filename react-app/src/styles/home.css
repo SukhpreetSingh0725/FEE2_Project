@@ -1,225 +1,257 @@
+/* --- GLOBAL RESET & BODY STYLES (from your original file) --- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #001219, #203a43, #2c5364);
-    color: white;
-  }
-
- /* Footer Styles */
-.footer {
-  background-color: #0d2b2a;
-  color: #ffffff;
-  padding: 3rem 2rem 1rem 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  border-radius: 15px;
-  margin-top: 2rem;
+  margin: 0 ;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.footer-left {
-  flex: 1 1 300px;
-  margin-bottom: 1rem;
-}
-
-.footer-left .footer-logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.footer-left p {
-  font-size: 0.9rem;
-  color: #cccccc;
-  margin-bottom: 1rem;
-}
-
-.footer-left .social-icons a {
-  margin-right: 0.5rem;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-.footer-columns {
-  display: flex;
-  gap: 4rem;
-  flex: 2 1 400px;
-  flex-wrap: wrap;
-}
-
-.footer-column h4 {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.footer-column a {
-  display: block;
-  color: #cccccc;
-  font-size: 0.9rem;
-  text-decoration: none;
-  margin-bottom: 0.3rem;
-}
-
-.footer-column a:hover {
-  color: #00aaff;
-}
-
-.back-to-top {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid #00aaff;
-  color: #00aaff;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 0.9rem;
-}
-
-.back-to-top:hover {
-  background-color: #00aaff;
+body {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to right, #001219, #203a43, #2c5364);
   color: white;
 }
 
-.footer-bottom {
-  text-align: center;
-  padding-top: 1rem;
-  font-size: 0.8rem;
-  color: #aaaaaa;
-  width: 100%;
-  border-top: 1px solid #004d4d;
-  margin-top: 1rem;
+/* --- REACT LAYOUT FIXES FOR STICKY FOOTER --- */
+
+/* 1. Ensure HTML, BODY, and the React Root span the full viewport height */
+html, body {
+height: 100%; /* Must be 100% */
+
 }
 
-/* Responsive */
+#root {
+min-height: 100vh; /* Make the root container take up at least the whole screen height */
+display: flex;     /* Enable flexbox for vertical alignment */
+flex-direction: column;
+margin: 0 auto;
+width: 100%; /* Stack children (Header, Main, Footer) vertically */
+}
+
+/* 2. Make the <main> element expand to push the footer down */
+main {
+flex-grow: 1; /* FORCES 'main' to take all remaining vertical space (The Key Fix) */
+display: flex; /* Ensures content within main can also fill space */
+flex-direction: column;
+}
+
+/* --- FOOTER STYLES (from your original file) --- */
+.footer {
+background-color: #123a39;
+color: #ffffff;
+padding: 2rem 2rem 1rem 2rem;
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+border-radius: 15px;
+margin-top: 2rem;
+
+
+}
+
+.footer-left {
+flex: 1 1 300px;
+margin-bottom: 1rem;
+}
+
+.footer-left .footer-logo {
+font-size: 1.5rem;
+font-weight: bold;
+margin-bottom: 0.5rem;
+}
+
+.footer-left p {
+font-size: 0.9rem;
+color: #cccccc;
+margin-bottom: 1rem;
+}
+
+.footer-left .social-icons a {
+margin-right: 0.5rem;
+color: #ffffff;
+text-decoration: none;
+font-size: 1.2rem;
+}
+
+.footer-columns {
+display: flex;
+gap: 4rem;
+flex: 2 1 400px;
+flex-wrap: wrap;
+}
+
+.footer-column h4 {
+font-size: 1rem;
+margin-bottom: 0.5rem;
+}
+
+.footer-column a {
+display: block;
+color: #cccccc;
+font-size: 0.9rem;
+text-decoration: none;
+margin-bottom: 0.3rem;
+}
+
+.footer-column a:hover {
+color: #00aaff;
+}
+
+.back-to-top {
+display: inline-block;
+margin-top: 1rem;
+padding: 0.5rem 1rem;
+border: 1px solid #00aaff;
+color: #00aaff;
+text-decoration: none;
+border-radius: 5px;
+font-size: 0.9rem;
+}
+
+.back-to-top:hover {
+background-color: #00aaff;
+color: white;
+}
+
+.footer-bottom {
+text-align: center;
+padding-top: 1rem;
+font-size: 0.8rem;
+color: #aaaaaa;
+width: 100%;
+border-top: 1px solid #004d4d;
+margin-top: 1rem;
+}
+
+/* In src/styles/home.css, locate the Responsive media query */
 @media (max-width: 768px) {
   .footer {
-    flex-direction: column;
-    align-items: center;
+    /* REMOVE THIS: This forces the left/column sections to stack */
+    /* flex-direction: column; */
+    align-items: center; /* Keep this if you want the block centered */
   }
-  .footer-columns {
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-  }
+  
   .back-to-top {
     margin-top: 1.5rem;
   }
 }
 
 
-  /* Hero Section */
-  .hero-section {
-    height: 85vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-  }
+/* --- HERO SECTION STYLES (from your original file) --- */
+.hero-section {
+min-height: 85vh; /* Changed from fixed height to min-height for flexibility */
+height: 100%; /* Fill available space within <main> */
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 2rem;
+width: 100%;
+}
 
-  .hero-content h1 {
-    font-size: 2.8rem;
-    margin-bottom: 1rem;
-  }
+.hero-content {
+  /* Set a max width so it doesn't span the entire screen on desktop */
+  max-width: 800px; 
+  width: 100%;
+}
 
-  .hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
+.hero-content h1 {
+font-size: 2.8rem;
+margin-bottom: 1rem;
 
-  .start-button {
-    padding: 0.8rem 1.5rem;
-    background-color: #00aaff;
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
+}
 
-  .start-button:hover {
-    background-color: #008fcc;
-  }
+.hero-content p {
+font-size: 1.2rem;
+margin-bottom: 2rem;
+}
 
-  /* Mobile Hero Text */
-  @media (max-width: 600px) {
-    .hero-content h1 {
-      font-size: 2rem;
-    }
+.start-button {
+padding: 0.8rem 1.5rem;
+background-color: #00aaff;
+color: white;
+text-decoration: none;
+font-size: 1rem;
+border-radius: 5px;
+transition: background-color 0.3s ease;
+}
 
-    .hero-content p {
-      font-size: 1rem;
-    }
-  }
+.start-button:hover {
+background-color: #008fcc;
+}
 
-  /* Form Styles */
-  .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    padding: 2rem;
-  }
+/* Mobile Hero Text */
+@media (max-width: 600px) {
+.hero-content h1 {
+  font-size: 2rem;
+}
 
-  .form-box {
-    background-color: #1f1f1f;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  }
+.hero-content p {
+  font-size: 1rem;
+}
+}
 
-  .form-box h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #00aaff;
-  }
+/* --- FORM STYLES (from your original file) --- */
+.form-container {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 80vh;
+padding: 2rem;
+}
 
-  .form-box input {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    border: 1px solid #333;
-    background-color: #141414;
-    color: white;
-  }
+.form-box {
+background-color: #1f1f1f;
+padding: 2rem;
+border-radius: 8px;
+width: 100%;
+max-width: 400px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
 
-  .form-box input:focus {
-    outline: none;
-    border-color: #00aaff;
-  }
+.form-box h2 {
+font-size: 1.8rem;
+margin-bottom: 1.5rem;
+color: #00aaff;
+}
 
-  .form-box button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #00aaff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.form-box input {
+width: 100%;
+padding: 0.8rem;
+margin-bottom: 1rem;
+border-radius: 5px;
+border: 1px solid #333;
+background-color: #141414;
+color: white;
+}
 
-  .form-box button:hover {
-    background-color: #008fcc;
-  }
+.form-box input:focus {
+outline: none;
+border-color: #00aaff;
+}
 
-  /* Link Styling */
-  .link {
-    display: block;
-    text-align: center;
-    margin-top: 1rem;
-    color: #00aaff;
-    text-decoration: none;
-  }
+.form-box button {
+width: 100%;
+padding: 0.8rem;
+background-color: #00aaff;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
 
-  .link:hover {
-    text-decoration: underline;
-  }
+.form-box button:hover {
+background-color: #008fcc;
+}
+
+/* Link Styling */
+.link {
+display: block;
+text-align: center;
+margin-top: 1rem;
+color: #00aaff;
+text-decoration: none;
+}
+
+.link:hover {
+text-decoration: underline;
+}
