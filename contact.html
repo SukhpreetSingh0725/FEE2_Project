@@ -19,7 +19,7 @@
       <a href="home.html">Home</a>
       <a href="Chat.html">Chat</a>
       <a href="About.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="active">Contact</a>
       <a href="Login.html">Sign Up</a>   <!-- Fixed -->
     </nav>
   </header>
@@ -33,5 +33,12 @@
       <button type="submit">Send Message</button>
     </form>
   </section>
+  <script>
+    document.getElementById("contact-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      alert("Your message has been sent successfully!");
+      this.reset();
+    });
+    </script>
 </body>
 </html>

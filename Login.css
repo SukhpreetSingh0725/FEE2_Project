@@ -8,6 +8,10 @@ body {
     margin: 0;
     padding-top: 70px;
 }
+.nav-links a.active {
+  color: #04f2e2;
+  border-bottom: 2px solid #04f2e2;
+}  
 
 .container {
     width: 450px;
