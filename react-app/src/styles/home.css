@@ -256,3 +256,39 @@ text-decoration: none;
 .link:hover {
 text-decoration: underline;
 }
+
+/* Add to src/styles/home.css */
+
+/* Add this block to one of your general or home CSS files */
+
+.profile-container {
+  /* CRITICAL FIX: Add margin to push content down past the navbar */
+  margin-top: 90px; 
+  
+  /* Optional: Centering and padding for better presentation */
+  padding: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 80vh; /* Ensures a minimum height for good visual space */
+}
+
+/* Optional extra styling for your profile content */
+.profile-title {
+  color: #00e5ff;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.profile-details {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid #00aaff;
+  padding: 25px;
+  border-radius: 10px;
+  color: white;
+}
+
+.profile-details p {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}

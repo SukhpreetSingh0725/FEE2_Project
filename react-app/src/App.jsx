@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'; // <-- ADD THIS IMPORT
+import { AuthProvider } from './context/AuthContext';
 
 // import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css';
 
@@ -14,6 +15,7 @@ import ChatPage from './pages/ChatPAge';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
 
 
 // 2. YOUR CUSTOM STYLES HERE
@@ -27,23 +29,24 @@ import './styles/home.css';
 
 function App() {
   return (
-    <>
-      <Header /> {/* The Header stays visible on all pages */}
+    // 💥 NEW: Wrap your entire application in the AuthProvider
+    <AuthProvider>
+      <Header /> 
       
       <main>
-        {/* 3. DEFINE THE ROUTING RULES USING <Routes> AND <Route> */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </main>
       <Footer />
-      
-      {/* You can add a Footer component here later */}
-    </>
+    </AuthProvider>
+    // 💥 NOTE: If AuthProvider relies on useNavigate (which it does), 
+    // it must be a child of BrowserRouter. Please ensure BrowserRouter is in main.jsx.
   );
 }
 

@@ -1,80 +1,110 @@
 /* Navbar Styles */
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background-color: #1c1717;
-    position: relative;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #1c1717;
   
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
+  /* CRITICAL FIX 1: Fixes the header to the top of the viewport */
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
   
-  /* Nav Links */
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-  }
-  
-  .nav-links a.active {
-    color: #04f2e2;
-    border-bottom: 2px solid #04f2e2;
-  }
-  
-  .nav-links a::after {
-    content: '';
-    width: 0%;
-    height: 2px;
-    background: #04f2e2;
-    display: block;
-    margin: auto;
-    transition: 0.5s;
-  }
-  
-  .nav-links a:hover::after {
-    width: 100%;
-  }
-  
-  /* Hamburger */
+  /* CRITICAL FIX 2: Ensures the header is on top of all page content */
+  z-index: 1050; 
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Nav Links (Desktop) */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a,
+.nav-links .logout-button { /* Apply link styles to the logout button */
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  background: none; /* For the button */
+  border: none; /* For the button */
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-links a.active {
+  color: #04f2e2;
+  border-bottom: 2px solid #04f2e2;
+}
+
+.nav-links a::after {
+  content: '';
+  width: 0%;
+  height: 2px;
+  background: #04f2e2;
+  display: block;
+  margin: auto;
+  transition: 0.5s;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Hover for Logout Button to match links */
+.nav-links .logout-button:hover {
+  color: #04f2e2;
+}
+
+
+/* Hamburger Icon */
+.hamburger {
+  display: none; /* Hidden by default */
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* ⚠️ Removed obsolete .menu-toggle styles */
+
+/* Responsive Nav (Mobile View) */
+@media (max-width: 768px) {
+  /* Show the hamburger icon */
   .hamburger {
-    display: none;
-    font-size: 1.8rem;
-    cursor: pointer;
+      display: block;
   }
-  
-  /* Checkbox Trick */
-  .menu-toggle {
-    display: none;
-  }
-  
-  /* Responsive Nav */
-  @media (max-width: 768px) {
-    .nav-links {
+
+  /* Initial hidden state for mobile menu */
+  .nav-links {
       flex-direction: column;
-      background-color: rgba(0,0,0,0.5);
+      background-color: rgba(0,0,0,0.8);
       position: absolute;
-      top: 60px;
+      top: 60px; /* Aligns below the header */
       right: 0;
       width: 200px;
-      display: none;
       padding: 1rem;
-    }
-  
-    .menu-toggle:checked + .hamburger + .nav-links {
-      display: flex;
-    }
-  
-    .hamburger {
-      display: block;
-    }
+      
+      /* FIX 3: Ensures menu layers above everything */
+      z-index: 1051; 
+      
+      /* FIX 4: Menu is hidden by default (instant toggle) */
+      display: none; 
+  }
+
+  /* CRITICAL: Menu becomes visible instantly when the 'open' class is applied by React state */
+  .nav-links.open {
+      display: flex; 
   }
   
+  /* Ensure the logout button is displayed correctly in the column layout */
+  .nav-links .logout-button {
+      text-align: left;
+      padding-top: 1.5rem; /* Separates it from the last link */
+  }
+}

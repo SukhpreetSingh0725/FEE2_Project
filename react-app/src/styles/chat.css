@@ -4,14 +4,14 @@
     /* Ensures the interface area fills the main space */
     flex-grow: 1;
     padding: 20px;
-    max-width: 1400px;
-    margin: 0 auto; /* Center the whole component wrapper */
+    max-width: 1600px;
+    margin: 110px auto; /* Center the whole component wrapper */
 }
 
 /* --- Container Wrapper for Chat and Flashcards (Advanced Layout) --- */
 .chat-container-wrapper {
     display: flex;
-    gap: 20px;
+    gap: 50px;
     min-height: 80vh;
 }
 
@@ -28,7 +28,7 @@
 
 .flashcards-sidebar {
     flex: 1.5; /* Flashcards take up 1.5 parts of the space (e.g., 30-40%) */
-    padding: 15px;
+    padding: 17px;
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.3); /* Slightly darker background */
     border: 1px solid #00aaff;
@@ -41,6 +41,30 @@
     border-bottom: 1px solid #00e5ff;
     padding-bottom: 10px;
     text-align: center;
+}
+/* Add to src/styles/chat.css */
+
+/* Style the action buttons container */
+.flashcard-card .flashcard-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+/* Style for the Delete Button */
+.delete-card-btn {
+    background-color: #f44336; /* Red background */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background-color 0.3s;
+}
+
+.delete-card-btn:hover {
+    background-color: #d32f2f;
 }
 
 /* --- CHAT WINDOW STYLES --- */
