@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="about.css">
+  <link rel="stylesheet" href="navbar.css">
+  <title>About</title>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <script>
+    fetch('navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+
+        // Highlight the current page link
+        const links = document.querySelectorAll('#navbar-container .nav-links a');
+        const currentPage = window.location.pathname.split("/").pop(); // get current file name
+        links.forEach(link => {
+          if(link.getAttribute('href') === currentPage){
+            link.classList.add('active');
+          }
+        });
+      })
+      .catch(error => console.error('Error loading navbar:', error));
+  </script>
+ 
+<!-- About -->
+  <section id="about">
+    <h1>About</h1>
+    <p>This app lets you chat with OpenAI's GPT model. It’s a demo single-page app with sign in, sign up, and chat features.</p>
+  </section>
+
+
+</body>
+</html>

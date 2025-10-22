@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="navbar.css">
+  <title>home</title>
+</head>
+<body>
+  <div id="navbar-container"></div>
+
+  <script>
+    fetch('navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+
+        // Highlight the current page link
+        const links = document.querySelectorAll('#navbar-container .nav-links a');
+        const currentPage = window.location.pathname.split("/").pop(); // get current file name
+        links.forEach(link => {
+          if(link.getAttribute('href') === currentPage){
+            link.classList.add('active');
+          }
+        });
+      })
+      .catch(error => console.error('Error loading navbar:', error));
+  </script>
+  
+  <!-- Main Page: Hero Section -->
+  <main class="hero-section">
+    <div class="hero-content">
+      <h1>Welcome to the OpenAI Chat App</h1>
+      <p>Talk to AI in real-time using the power of GPT!</p>
+      <a href="Login.html" class="start-button">Start Chatting</a>
+    </div>
+  </main>
+  <div id="footer-container"></div>
+
+<script>
+  fetch('footer.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('footer-container').innerHTML = data)
+    .catch(err => console.error('Error loading footer:', err));
+</script>
+
+
+
+</body>
+</html>

@@ -5,26 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link rel="stylesheet" href="Login.css">
-  <!-- <link rel="stylesheet" href="frontend/src/components/navbar.css"> -->
+
   <title>Login</title>
 </head>
 <body>
-  <header class="navbar">
-    <div class="logo">SparkQ</div>
+    <div id="navbar-container"></div>
 
-    <!-- Hamburger Checkbox -->
-    <input type="checkbox" id="menu-toggle" class="menu-toggle" />
-    <label for="menu-toggle" class="hamburger">&#9776;</label>
-
-    <!-- Navigation Links -->
-    <nav class="nav-links">
-      <a href="home.html">Home</a>
-      <a href="Chat.html">Chat</a>
-      <a href="About.html">About</a>
-     <a href="contact.html">Contact</a>
-      <a href="Login.html" class="active">Sign Up</a>
-    </nav>
-  </header>
+    <script>
+        fetch('navbar.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+    
+            // Highlight the current page link
+            const links = document.querySelectorAll('#navbar-container .nav-links a');
+            const currentPage = window.location.pathname.split("/").pop(); // get current file name
+            links.forEach(link => {
+              if(link.getAttribute('href') === currentPage){
+                link.classList.add('active');
+              }
+            });
+          })
+          .catch(error => console.error('Error loading navbar:', error));
+      </script>
 
   
 <div class="container">
