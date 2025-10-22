@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 
 // 1. IMPORT ALL YOUR PAGE COMPONENTS (MUST BE CREATED IN src/pages)
 import HomePage from './pages/HomePage';
-import ChatPage from './pages/ChatPage';
+import ChatPage from './pages/ChatPAge';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
@@ -19,6 +19,7 @@ import LoginPage from './pages/LoginPage';
 // 2. YOUR CUSTOM STYLES HERE
 import './styles/navbar.css'; 
 import './styles/login.css'; 
+import './styles/chat.css'; 
 import './styles/contact.css';
 import './styles/about.css'; 
 import './styles/home.css'; 

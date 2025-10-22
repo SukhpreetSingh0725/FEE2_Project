@@ -1,0 +1,210 @@
+/* src/styles/chat.css */
+
+#chat-interface {
+    /* Ensures the interface area fills the main space */
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto; /* Center the whole component wrapper */
+}
+
+/* --- Container Wrapper for Chat and Flashcards (Advanced Layout) --- */
+.chat-container-wrapper {
+    display: flex;
+    gap: 20px;
+    min-height: 80vh;
+}
+
+.chat-window-main {
+    flex: 3; /* Chat takes up 3 parts of the space (e.g., 60-70%) */
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-window-main h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.flashcards-sidebar {
+    flex: 1.5; /* Flashcards take up 1.5 parts of the space (e.g., 30-40%) */
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3); /* Slightly darker background */
+    border: 1px solid #00aaff;
+    overflow-y: auto;
+}
+
+.flashcards-sidebar h2 {
+    color: #00e5ff;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #00e5ff;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* --- CHAT WINDOW STYLES --- */
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border: 1px solid #00aaff;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.message-list {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.ai {
+    justify-content: flex-start;
+}
+
+.message-bubble {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    line-height: 1.4;
+    font-size: 1rem;
+}
+
+.message.user .message-bubble {
+    background-color: #00aaff;
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.message.ai .message-bubble {
+    background-color: #333;
+    color: #04f2e2; /* Updated AI color */
+    border-bottom-left-radius: 5px;
+}
+
+/* Chat Input Form */
+.chat-input-form {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #00aaff;
+    background-color: #1a1a1a;
+}
+
+.chat-input-form input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px 0 0 5px;
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.chat-input-form button {
+    padding: 10px 15px;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-input-form button:hover {
+    background-color: #008fcc;
+}
+
+/* --- FLASHCARD STYLES --- */
+.flashcard-input-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #04f2e2;
+}
+
+.flashcard-input-form input, 
+.flashcard-input-form textarea {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.flashcard-input-form button {
+    padding: 8px;
+    background-color: #04f2e2; /* Flashcard save button color */
+    color: #001219;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.flashcard-input-form button:hover {
+    background-color: #04d9cf;
+}
+
+.flashcard-card {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid #00aaff;
+}
+
+.flashcard-question {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.toggle-answer-btn {
+    padding: 5px 10px;
+    margin-top: 5px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.flashcard-answer {
+    margin-top: 5px;
+    padding: 5px 0;
+    color: #00aaff;
+    border-top: 1px dashed #555;
+}
+
+.no-cards-msg {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Responsive adjustments for the two-column layout */
+@media (max-width: 900px) {
+    .chat-container-wrapper {
+        flex-direction: column; /* Stack chat and flashcards vertically */
+    }
+
+    .chat-window-main, .flashcards-sidebar {
+        flex: none;
+        width: 100%;
+    }
+}
