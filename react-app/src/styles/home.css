@@ -32,6 +32,7 @@ main {
 flex-grow: 1; /* FORCES 'main' to take all remaining vertical space (The Key Fix) */
 display: flex; /* Ensures content within main can also fill space */
 flex-direction: column;
+padding-top: 1px;
 }
 
 /* --- FOOTER STYLES (from your original file) --- */

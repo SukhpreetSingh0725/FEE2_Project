@@ -1,24 +1,18 @@
-body {
-  font-family: 'Times New Roman', Times, serif;
-  background: linear-gradient(to right, #001219, #203a43, #2c5364);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  margin: 0;
-  padding-top: 70px;
-}
-.nav-links a.active {
-color: #04f2e2;
-border-bottom: 2px solid #04f2e2;
-}  
+/* Login/Sign-up Component Styles */
 
-.container {
-  width: 450px;
-  height: 500px;
+/* * CRITICAL FIX: The new body rule you provided was overriding the global 
+ * layout rules (#root, main) needed for the sticky footer. We remove it here.
+ */
+
+ .container {
+  /* FIX: Remove fixed width/height and let content define it, while centering the block */
+  width: 450px; /* Keep this max size for the card */
+  min-height: 500px; /* Use min-height to ensure the card can grow */
   perspective: 1000px;
   position: relative;
-  margin-top: 40px;
+  
+  /* FIX: Center the container horizontally on the page */
+  margin: 120px auto; 
 }
 
 .card {
@@ -40,10 +34,13 @@ border-bottom: 2px solid #04f2e2;
   backface-visibility: hidden;
   background: rgba(147, 149, 151, 0.2);
   border-radius: 20px;
+  
+  /* FIX: Ensure content is vertically centered */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center; 
   align-items: center;
+  
   padding: 20px;
   box-sizing: border-box;
   text-shadow: 0 0 10px #00e5ffbb;
@@ -61,6 +58,8 @@ border-bottom: 2px solid #04f2e2;
   border-radius: 8px;
   border: none;
   font-size: 16px;
+  background: white; /* Ensure inputs are visible */
+  color: black;     /* Ensure input text is readable */
 }
 
 .form-container button {
@@ -101,214 +100,10 @@ border-bottom: 2px solid #04f2e2;
   .container {
       width: 90%;
       height: auto;
+      /* Ensure it remains centered */
+      margin: 40px auto; 
   }
   .form-container input {
       width: 90%;
   }
 }
- 
- * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  } 
-
-   body {
-   
-    background: linear-gradient(to right, #001219, #203a43, #2c5364);
-    color: white;
-  } 
-
-  /* Navbar Styles */
-  .navbar {
-      font-family: 'Arial', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 2rem;
-    background-color: #1c1717;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-  }
-
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-
-  /* Nav Links */
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-  
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-  }
-  .nav-links a::after {
-          content: '';
-          width: 0%;
-          height: 2px;
-          background: #04f2e2;
-          display: block;
-          margin: auto;
-          transition: 0.5s;
-      }
-
-      .nav-links a:hover::after {
-          width: 100%;
-      }
-  
-
-  /* Hamburger */
-  .hamburger {
-    display: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-
-  }
-
-  /* Checkbox Trick */
-  .menu-toggle {
-    display: none;
- 
-  }
-
-  /* Responsive Nav */
-  @media (max-width: 768px) {
-    .nav-links {
-      flex-direction: column;
-      background-color: rgba(0,0,0,0.5);
-      position: absolute;
-      top: 60px;
-      right: 0;
-      width: 200px;
-      display: none;
-      padding: 1rem;
-    }
-
-    .menu-toggle:checked + .hamburger + .nav-links {
-      display: flex;
-    }
-
-    .hamburger {
-      display: block;
-    }
-  }
-
-  /* Hero Section */
-  .hero-section {
-    height: 85vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-  }
-
-  .hero-content h1 {
-    font-size: 2.8rem;
-    margin-bottom: 1rem;
-  }
-
-  .hero-content p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-  }
-
-  .start-button {
-    padding: 0.8rem 1.5rem;
-    background-color: #00aaff;
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-
-  .start-button:hover {
-    background-color: #008fcc;
-  }
-
-  /* Mobile Hero Text */
-  @media (max-width: 600px) {
-    .hero-content h1 {
-      font-size: 2rem;
-    }
-
-    .hero-content p {
-      font-size: 1rem;
-    }
-  }
-
-  /* Form Styles */
-  .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    padding: 2rem;
-  }
-
-  .form-box {
-    background-color: #1f1f1f;
-    padding: 2rem;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  }
-
-  .form-box h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #00aaff;
-  }
-
-  .form-box input {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    border: 1px solid #333;
-    background-color: #141414;
-    color: white;
-  }
-
-  .form-box input:focus {
-    outline: none;
-    border-color: #00aaff;
-  }
-
-  .form-box button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #00aaff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .form-box button:hover {
-    background-color: #008fcc;
-  }
-
-  /* Link Styling */
-  .link {
-    display: block;
-    text-align: center;
-    margin-top: 1rem;
-    color: #00aaff;
-    text-decoration: none;
-  }
-
-  .link:hover {
-    text-decoration: underline;
-  }
