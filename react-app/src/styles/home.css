@@ -15,251 +15,322 @@ body {
 
 /* 1. Ensure HTML, BODY, and the React Root span the full viewport height */
 html, body {
-height: 100%; /* Must be 100% */
-
+  height: 100%; /* Must be 100% */
 }
 
 #root {
-min-height: 100vh; /* Make the root container take up at least the whole screen height */
-display: flex;     /* Enable flexbox for vertical alignment */
-flex-direction: column;
-margin: 0 auto;
-width: 100%; /* Stack children (Header, Main, Footer) vertically */
+  min-height: 100vh; /* Make the root container take up at least the whole screen height */
+  display: flex; /* Enable flexbox for vertical alignment */
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%; /* Stack children (Header, Main, Footer) vertically */
 }
 
 /* 2. Make the <main> element expand to push the footer down */
 main {
-flex-grow: 1; /* FORCES 'main' to take all remaining vertical space (The Key Fix) */
-display: flex; /* Ensures content within main can also fill space */
-flex-direction: column;
-padding-top: 1px;
+  flex-grow: 1; /* FORCES 'main' to take all remaining vertical space (The Key Fix) */
+  display: flex; /* Ensures content within main can also fill space */
+  flex-direction: column;
+  padding-top: 1px;
 }
 
-/* --- FOOTER STYLES (from your original file) --- */
-.footer {
-background-color: #123a39;
-color: #ffffff;
-padding: 2rem 2rem 1rem 2rem;
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-border-radius: 15px;
-margin-top: 2rem;
+/* ---------------------------------------------------------------------- */
+/* --- MODERN HOME PAGE STYLES (NEW SECTION) --- */
+/* ---------------------------------------------------------------------- */
 
-
+/* GLOBAL HOME LAYOUT */
+.home-container {
+    min-height: 80vh; /* Ensure it fills the screen below the header */
+    color: #f0f0f0; /* Light text for a dark/modern theme */
+    background-color: #1a1a2e; /* Dark, deep background */
+    /* Subtle vertical gradient for depth */
+    background-image: linear-gradient(180deg, #1a1a2e 0%, #0f0f1c 100%);
+    padding-top: 50px; /* Space from the navbar */
+    padding-bottom: 4rem;
+    
 }
 
-.footer-left {
-flex: 1 1 300px;
-margin-bottom: 1rem;
-}
-
-.footer-left .footer-logo {
-font-size: 1.5rem;
-font-weight: bold;
-margin-bottom: 0.5rem;
-}
-
-.footer-left p {
-font-size: 0.9rem;
-color: #cccccc;
-margin-bottom: 1rem;
-}
-
-.footer-left .social-icons a {
-margin-right: 0.5rem;
-color: #ffffff;
-text-decoration: none;
-font-size: 1.2rem;
-}
-
-.footer-columns {
-display: flex;
-gap: 4rem;
-flex: 2 1 400px;
-flex-wrap: wrap;
-}
-
-.footer-column h4 {
-font-size: 1rem;
-margin-bottom: 0.5rem;
-}
-
-.footer-column a {
-display: block;
-color: #cccccc;
-font-size: 0.9rem;
-text-decoration: none;
-margin-bottom: 0.3rem;
-}
-
-.footer-column a:hover {
-color: #00aaff;
-}
-
-.back-to-top {
-display: inline-block;
-margin-top: 1rem;
-padding: 0.5rem 1rem;
-border: 1px solid #00aaff;
-color: #00aaff;
-text-decoration: none;
-border-radius: 5px;
-font-size: 0.9rem;
-}
-
-.back-to-top:hover {
-background-color: #00aaff;
-color: white;
-}
-
-.footer-bottom {
-text-align: center;
-padding-top: 1rem;
-font-size: 0.8rem;
-color: #aaaaaa;
-width: 100%;
-border-top: 1px solid #004d4d;
-margin-top: 1rem;
-}
-
-/* In src/styles/home.css, locate the Responsive media query */
-@media (max-width: 768px) {
-  .footer {
-    /* REMOVE THIS: This forces the left/column sections to stack */
-    /* flex-direction: column; */
-    align-items: center; /* Keep this if you want the block centered */
-  }
-  
-  .back-to-top {
-    margin-top: 1.5rem;
-  }
-}
-
-
-/* --- HERO SECTION STYLES (from your original file) --- */
+/* HERO SECTION - Overrides the simple existing one */
 .hero-section {
-min-height: 85vh; /* Changed from fixed height to min-height for flexibility */
-height: 100%; /* Fill available space within <main> */
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
-padding: 2rem;
-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 80px 20px; /* Generous vertical padding */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .hero-content {
-  /* Set a max width so it doesn't span the entire screen on desktop */
-  max-width: 800px; 
-  width: 100%;
+    /* Keep it centered, but allow text to span wider than 800px if needed */
+    max-width: 900px; 
+    width: 100%;
 }
 
-.hero-content h1 {
-font-size: 2.8rem;
-margin-bottom: 1rem;
-
+.hero-headline {
+    font-size: 3.5rem; /* Large, eye-catching font */
+    font-weight: 800;
+    color: #00e5ff; /* Primary accent color (vibrant cyan) */
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); /* Subtle text shadow for pop */
 }
 
-.hero-content p {
-font-size: 1.2rem;
-margin-bottom: 2rem;
+.hero-subtext {
+    font-size: 1.4rem;
+    color: #ccc;
+    margin-bottom: 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.start-button {
-padding: 0.8rem 1.5rem;
-background-color: #00aaff;
-color: white;
-text-decoration: none;
-font-size: 1rem;
-border-radius: 5px;
-transition: background-color 0.3s ease;
+/* CTA BUTTON (Primary Call to Action) - Enhanced Quality */
+.cta-button {
+  display: inline-block;
+  text-decoration: none;
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none; /* Ensure no default border interferes */
+  color: white;
+  cursor: pointer;
+  
+  /* 💥 Modern Look: Gradient for Depth */
+  background-color: #00aaff;
+  background-image: linear-gradient(145deg, #00aaff 0%, #008fcc 100%);
+  
+  /* 💥 Subtle Shadow: Lifts the button */
+  box-shadow: 0 4px 10px rgba(0, 150, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  transition: all 0.2s ease-in-out;
 }
 
-.start-button:hover {
-background-color: #008fcc;
+.cta-button:hover {
+  /* Subtle shift on hover */
+  background-color: #0088cc;
+  background-image: linear-gradient(145deg, #008fcc 0%, #0077b3 100%);
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 15px rgba(0, 150, 255, 0.6); /* Deeper shadow on hover */
 }
 
-/* Mobile Hero Text */
-@media (max-width: 600px) {
-.hero-content h1 {
-  font-size: 2rem;
+.cta-button:active {
+  /* Push-down effect */
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 150, 255, 0.4);
 }
 
-.hero-content p {
+/* FEATURES GRID */
+.features-grid {
+    display: grid;
+    /* Responsive grid: minmax(300px) ensures 3 cards on desktop, 1 on mobile */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background-color: #2b2b4a; /* Slightly lighter dark background for contrast */
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(0, 170, 255, 0.1);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 10px 25px rgba(0, 170, 255, 0.3); /* Stronger shadow on hover */
+}
+
+.feature-card i {
+    font-size: 3rem;
+    color: #00e5ff; /* Icon accent color */
+    margin-bottom: 15px;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    color: #bbb;
+}
+
+/* New CSS to make the feature card look and behave like a link */
+.feature-card-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Keep text color from parent */
+    display: block; /* Make the Link component fill the grid cell */
+    /* Add a subtle interactive effect to the card itself */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Apply hover effect to the link wrapper */
+.feature-card-link:hover .feature-card {
+    transform: translateY(-5px); /* Lift effect on hover (moved to this class) */
+    box-shadow: 0 10px 25px rgba(0, 170, 255, 0.3); 
+    border-color: #00e5ff; /* Highlight border on hover */
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- FOOTER STYLES (from your original file) --- */
+/* ---------------------------------------------------------------------- */
+.footer {
+  background-color: #123a39;
+  color: #ffffff;
+  padding: 2rem 2rem 1rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  border-radius: 2px;
+  /* margin-top: 2rem; */
+}
+
+.footer-left {
+  flex: 1 1 300px;
+  margin-bottom: 1rem;
+}
+
+.footer-left .footer-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.footer-left p {
+  font-size: 0.9rem;
+  color: #cccccc;
+  margin-bottom: 1rem;
+}
+
+.footer-left .social-icons a {
+  margin-right: 0.5rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.footer-columns {
+  display: flex;
+  gap: 4rem;
+  flex: 2 1 400px;
+  flex-wrap: wrap;
+}
+
+.footer-column h4 {
   font-size: 1rem;
-}
+  margin-bottom: 0.5rem;
 }
 
-/* --- FORM STYLES (from your original file) --- */
+.footer-column a {
+  display: block;
+  color: #cccccc;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-bottom: 0.3rem;
+}
+
+.footer-column a:hover {
+  color: #00aaff;
+}
+
+.back-to-top {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #00aaff;
+  color: #00aaff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.back-to-top:hover {
+  background-color: #00aaff;
+  color: white;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  color: #aaaaaa;
+  width: 100%;
+  border-top: 1px solid #004d4d;
+  margin-top: 1rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- PROFILE AND LOGIN STYLES (from your original file) --- */
+/* ---------------------------------------------------------------------- */
 .form-container {
-display: flex;
-justify-content: center;
-align-items: center;
-height: 80vh;
-padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding: 2rem;
 }
 
 .form-box {
-background-color: #1f1f1f;
-padding: 2rem;
-border-radius: 8px;
-width: 100%;
-max-width: 400px;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  background-color: #1f1f1f;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .form-box h2 {
-font-size: 1.8rem;
-margin-bottom: 1.5rem;
-color: #00aaff;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #00aaff;
 }
 
 .form-box input {
-width: 100%;
-padding: 0.8rem;
-margin-bottom: 1rem;
-border-radius: 5px;
-border: 1px solid #333;
-background-color: #141414;
-color: white;
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid #333;
+  background-color: #141414;
+  color: white;
 }
 
 .form-box input:focus {
-outline: none;
-border-color: #00aaff;
+  outline: none;
+  border-color: #00aaff;
 }
 
 .form-box button {
-width: 100%;
-padding: 0.8rem;
-background-color: #00aaff;
-color: white;
-border: none;
-border-radius: 5px;
-cursor: pointer;
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .form-box button:hover {
-background-color: #008fcc;
+  background-color: #008fcc;
 }
 
 /* Link Styling */
 .link {
-display: block;
-text-align: center;
-margin-top: 1rem;
-color: #00aaff;
-text-decoration: none;
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+  color: #00aaff;
+  text-decoration: none;
 }
 
 .link:hover {
-text-decoration: underline;
+  text-decoration: underline;
 }
-
-/* Add to src/styles/home.css */
-
-/* Add this block to one of your general or home CSS files */
 
 .profile-container {
   /* CRITICAL FIX: Add margin to push content down past the navbar */
@@ -291,4 +362,35 @@ text-decoration: underline;
 .profile-details p {
   margin-bottom: 15px;
   font-size: 1.1rem;
+}
+
+/* ---------------------------------------------------------------------- */
+/* --- MEDIA QUERIES (Updated) --- */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Footer styles */
+  .footer {
+    align-items: center; /* Keep this if you want the block centered */
+  }
+  
+  .back-to-top {
+    margin-top: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Hero Text Scaling for smaller screens */
+  .hero-headline {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtext {
+    font-size: 1.2rem;
+  }
+  
+  /* Login/Signup forms */
+  .form-container {
+    height: auto; /* Allow form to naturally expand */
+    padding: 1rem;
+  }
 }
