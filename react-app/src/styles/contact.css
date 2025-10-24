@@ -21,6 +21,7 @@
       align-items: center;
       text-align: center;
       padding: 2rem;
+      
     }
 
     .hero-content h1 {
@@ -161,7 +162,7 @@
   /* Contact Section Styling */
   #contact {
     max-width: 520px;
-    margin: 4rem auto 6rem auto;
+    margin: 9rem auto 6rem auto;
     padding: 2.5rem 3rem;
     background: rgba(30, 30, 30, 0.85);
     border-radius: 16px;
@@ -244,12 +245,12 @@
   /* Responsive adjustments */
   @media (max-width: 600px) {
     #contact {
-      margin: 2rem 1rem 4rem 1rem;
+      margin: 9rem 4rem 5rem 4rem;
       padding: 2rem 1.5rem;
       border-radius: 12px;
     }
 
     #contact h1 {
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
   }
