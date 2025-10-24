@@ -32,7 +32,6 @@ main {
   flex-grow: 1; 
   display: flex;
   flex-direction: column;
-  padding-top: 1px;
   
   /* 💥 FIX: APPLY THE MODERN BACKGROUND TO ALL PAGES */
   background-color: #1a1a2e; /* Dark, deep background color */
@@ -286,8 +285,8 @@ main {
 /* ---------------------------------------------------------------------- */
 
 #about { /* Main container for the About page */
-  max-width: 1100px; /* Made wider for modern content layout */
-  margin: 5rem auto 6rem auto;
+  max-width: 1000px; /* Made wider for modern content layout */
+  margin: 10rem auto 6rem auto;
   padding: 2.5rem 3rem;
   
   /* Modern Background Glass Effect */
@@ -415,7 +414,7 @@ main {
 /* --- MEDIA QUERIES (Updated) --- */
 /* ---------------------------------------------------------------------- */
 
-@media (max-width: 768px) {
+@media (max-width: 1100px) {
   /* Footer styles */
   .footer {
       align-items: center; 
@@ -431,6 +430,45 @@ main {
   }
   .value-cards {
       flex-direction: column;
+  }
+  #about { /* Main container for the About page */
+    max-width: 700px; /* Made wider for modern content layout */
+    margin: 10rem auto 6rem auto;
+    padding: 2.5rem 3rem;
+   
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hero Text Scaling for smaller screens */
+  .hero-headline {
+      font-size: 2.5rem;
+  }
+  
+  .hero-subtext {
+      font-size: 1.2rem;
+  }
+  
+  /* Login/Signup forms */
+  .form-container {
+      height: auto; 
+      padding: 1rem;
+  }
+  
+  /* About section scaling */
+  #about { /* Main container for the About page */
+    max-width: 500px; /* Made wider for modern content layout */
+    margin: 8rem auto 6rem auto;
+    padding: 2.5rem 3rem;
+   
+  }
+  
+  .about-hero h1 {
+      font-size: 2rem;
+  }
+  
+  .tech-icons i {
+      font-size: 2.5rem;
   }
 }
 
@@ -451,10 +489,11 @@ main {
   }
   
   /* About section scaling */
-  #about {
-      margin: 5rem 1rem 4rem 1rem;
-      padding: 2rem 1.5rem;
-      border-radius: 12px;
+  #about { /* Main container for the About page */
+    max-width: 400px; /* Made wider for modern content layout */
+    margin: 8rem auto 6rem auto;
+    padding: 2.5rem 3rem;
+   
   }
   
   .about-hero h1 {

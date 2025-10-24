@@ -12,7 +12,7 @@
   position: relative;
   
   /* FIX: Center the container horizontally on the page */
-  margin: 120px auto; 
+  margin: 110px auto;
 }
 
 .card {
@@ -47,14 +47,14 @@
 }
 
 .form-container h1 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: #00e5ff;
 }
 
 .form-container input {
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
+  margin: 15px 0;
   border-radius: 8px;
   border: none;
   font-size: 16px;
@@ -75,7 +75,7 @@
 }
 
 .form-container a {
-  margin-top: 10px;
+  margin-top: 20px;
   color: #00e5ff;
   cursor: pointer;
 }
@@ -87,8 +87,8 @@
 /* Social icons */
 .social-icons {
   display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 .social-icons a {
   color: #00e5ff;
@@ -96,14 +96,29 @@
 }
 
 /* Responsive */
-@media (max-width: 450px){
+@media (max-width: 600px){
   .container {
-      width: 90%;
+      width: 80%;
       height: auto;
-      /* Ensure it remains centered */
-      margin: 40px auto; 
+      margin: 9rem 4rem 5rem 4rem;
   }
   .form-container input {
       width: 90%;
   }
+  .form-container h1 {
+    margin-top: 10px;
+  }
+  .form-container a {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    cursor: pointer;
+  }
+  .form-container button {
+    width: 40%;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+  }
 }
+

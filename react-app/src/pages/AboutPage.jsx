@@ -12,7 +12,7 @@ function AboutPage() {
         <section id="about" className="about-page-container">
             
             <header className="about-hero">
-                <h1>Our Mission: Turbocharge Your Learning.</h1>
+                <h1>Our Mission: Turbocharge Your Learning</h1>
                 <p className="subtitle">SparkQ is the AI-powered companion built by developers, for developers. We turn complexity into clarity.</p>
             </header>
 
