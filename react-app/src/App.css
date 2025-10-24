@@ -1,42 +1,422 @@
+/* ---------------------------------------------------------------------- */
+/* --- GLOBAL RESET & BASE STYLES --- */
+/* ---------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* Base font and color */
+  font-family: 'Arial', sans-serif;
+  color: white;
+  
+  /* Fallback background color */
+  background-color: #1a1a2e; 
+}
+
+/* --- REACT LAYOUT FIXES FOR STICKY FOOTER --- */
+html, body {
+  height: 100%;
+}
+
 #root {
-  max-width: 1280px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+}
+
+/* Main content wrapper with universal dark theme background */
+main {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  padding-top: 1px; /* Small trick to trigger the flex-grow */
+  
+  /* UNIVERSAL DARK THEME */
+  background-color: #1a1a2e; /* Dark, deep background color */
+  background-image: linear-gradient(180deg, #1a1a2e 0%, #0f0f1c 100%); /* Subtle vertical gradient */
+  
+  /* Space below the fixed header */
+  padding-top: 50px; 
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* --- GENERAL COMPONENTS (Buttons, Forms, Alerts) --- */
+/* ---------------------------------------------------------------------- */
+
+/* CTA BUTTON (Primary Call to Action) - Hotstar inspired style */
+.cta-button {
+  display: inline-block;
+  text-decoration: none;
+  padding: 15px 35px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  
+  /* Modern Look: Gradient for Depth */
+  background-color: #00aaff;
+  background-image: linear-gradient(145deg, #00aaff 0%, #008fcc 100%);
+  
+  /* Subtle Shadow: Lifts the button */
+  box-shadow: 0 4px 10px rgba(0, 150, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  transition: all 0.2s ease-in-out;
+}
+
+.cta-button:hover {
+  background-color: #0088cc;
+  background-image: linear-gradient(145deg, #008fcc 0%, #0077b3 100%);
+  transform: translateY(-2px); 
+  box-shadow: 0 6px 15px rgba(0, 150, 255, 0.6);
+}
+
+.cta-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(0, 150, 255, 0.4);
+}
+
+/* Secondary CTA (Used on About Page) */
+.secondary-cta {
+  background-color: #4CAF50; /* Green */
+  background-image: linear-gradient(145deg, #4CAF50 0%, #3e8e41 100%);
+  box-shadow: 0 4px 10px rgba(76, 175, 80, 0.4);
+}
+.secondary-cta:hover {
+  background-image: linear-gradient(145deg, #3e8e41 0%, #337335 100%);
+  box-shadow: 0 6px 15px rgba(76, 175, 80, 0.6);
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* --- HEADER AND FOOTER STYLES (Placeholder) --- */
+/* ---------------------------------------------------------------------- */
+.header, .footer {
+  width: 100%;
+  z-index: 10;
+}
+
+.footer {
+  background-color: #123a39;
+  color: #ffffff;
+  padding: 2rem 2rem 1rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* Rounded top corners to fit into the background */
+  border-radius: 15px 15px 0 0; 
+  margin-top: 2rem; /* Separator margin */
+}
+/* ... (Add other header/footer styles here) ... */
+
+
+/* ---------------------------------------------------------------------- */
+/* --- HOME PAGE STYLES --- */
+/* ---------------------------------------------------------------------- */
+
+.home-container {
+  min-height: 80vh; 
+  color: #f0f0f0;
+  padding-bottom: 4rem; 
+}
+
+/* HERO SECTION */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 20px 40px; 
+  max-width: 1200px;
+  margin: 0 auto; 
+}
+
+/* Headline style (Base for animation) */
+.hero-headline {
+  font-size: 3.5rem; 
+  font-weight: 800;
+  color: #00e5ff; /* Primary accent color */
+  margin-bottom: 20px;
+  /* Initial shadow setup for the animation */
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.5); 
+}
+
+/* Headline animation class */
+.animated-text {
+  animation: pulseGlow 4s infinite alternate; 
+}
+
+.hero-subtext {
+  font-size: 1.4rem;
+  color: #ccc;
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* FEATURES GRID */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 60px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Link wrapper for the cards */
+.feature-card-link {
+  text-decoration: none; 
+  color: inherit; 
+  display: block; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card {
+  background-color: #2b2b4a; /* Darker blue/purple background for cards */
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  border: 1px solid rgba(0, 170, 255, 0.1);
+  height: 100%; 
+  box-sizing: border-box;
+}
+
+/* Hover effect on the link wrapper */
+.feature-card-link:hover .feature-card {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 10px 25px rgba(0, 170, 255, 0.3); 
+  border-color: #00e5ff; /* Highlight border on hover */
+}
+
+.feature-card i {
+  font-size: 3rem;
+  color: #00e5ff;
+  margin-bottom: 15px;
+  transition: transform 0.3s; 
+}
+
+.feature-card-link:hover .feature-card i {
+  transform: scale(1.1);
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: #bbb;
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* --- ABOUT & CONTACT PAGE STYLES (Glass Effect) --- */
+/* ---------------------------------------------------------------------- */
+
+/* Shared Glass container styling for #about and #contact */
+.about-page-container, #contact { 
+  max-width: 1100px;
+  margin: 5rem auto 6rem auto;
+  padding: 2.5rem 3rem;
+  
+  /* Glass Effect Base */
+  background: rgba(30, 30, 30, 0.85); 
+  border-radius: 16px;
+  box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.7),
+      0 0 15px 5px rgba(0, 229, 255, 0.3);
+  backdrop-filter: blur(10px);
+  color: #cdd6f4;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* About Page Sections */
+.about-page-container h1, .about-page-container h2 {
+  color: #00e5ff;
+  text-shadow: 0 0 8px #00e5ff88;
+  margin-bottom: 1.5rem;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.about-section {
+  margin-bottom: 40px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.about-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.value-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.value-card {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: rgba(0, 170, 255, 0.1);
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.value-card i {
+  font-size: 2.5rem;
+  color: #00aaff;
+  margin-bottom: 10px;
+}
+
+.tech-grid {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.tech-icon {
+  text-align: center;
+}
+
+.tech-icon i {
+  font-size: 4rem;
+  color: #00e5ff;
+  transition: transform 0.3s;
+}
+
+.tech-icon i:hover {
+  transform: scale(1.1);
+}
+
+/* CTA Section on About Page */
+.cta-section {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 30px;
+}
+.cta-section h2 {
+  margin-bottom: 20px;
+}
+
+/* CONTACT PAGE SPECIFIC STYLES */
+#contact { 
+  max-width: 800px; 
+  text-align: center;
+}
+#contact h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ffbb;
+}
+#contact .subtitle {
+  font-size: 1.1rem;
+  color: #bbb;
+  margin-bottom: 40px;
+}
+.contact-info {
+  margin: 20px 0;
+  padding: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.contact-info h3 {
+  font-size: 1.3rem;
+  color: #00aaff;
+  margin-bottom: 10px;
+}
+.contact-info p a {
+  color: #00e5ff; 
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.contact-info p a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+
+/* ---------------------------------------------------------------------- */
+/* --- ANIMATIONS --- */
+/* ---------------------------------------------------------------------- */
+
+/* Keyframe for the subtle glow animation on the main headline */
+@keyframes pulseGlow {
+  0% {
+      text-shadow: 0 0 5px rgba(0, 229, 255, 0.3), 0 0 10px rgba(0, 229, 255, 0.3);
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+      /* Peak glow */
+      text-shadow: 0 0 15px #00e5ff, 0 0 25px rgba(0, 229, 255, 0.7);
+  }
+  100% {
+      text-shadow: 0 0 5px rgba(0, 229, 255, 0.3), 0 0 10px rgba(0, 229, 255, 0.3);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+
+/* ---------------------------------------------------------------------- */
+/* --- MEDIA QUERIES (Responsiveness) --- */
+/* ---------------------------------------------------------------------- */
+@media (max-width: 800px) {
+  .features-grid {
+      padding: 40px 20px;
+      gap: 20px;
+  }
+  
+  .about-page-container, #contact {
+      margin: 3rem 1rem 4rem 1rem;
+      padding: 2rem 1.5rem;
+  }
+  
+  .value-cards {
+      flex-direction: column;
+      gap: 15px;
+  }
+  
+  .value-card {
+      max-width: 100%;
+  }
+  
+  .footer {
+      flex-direction: column;
+      text-align: center;
   }
 }
 
-.card {
-  padding: 2em;
+@media (max-width: 600px) {
+  /* Hero Text Scaling for smaller screens */
+  .hero-headline {
+      font-size: 2.5rem;
+  }
+  .hero-subtext {
+      font-size: 1.2rem;
+  }
 }
 
-.read-the-docs {
-  color: #888;
-}
+
+
+/* ---------------------------------------------------------------------- */
+/* --- ANIMATED FEATURE CARDS --- */
+/* ---------------------------------------------------------------------- */
+
+/* 1. Base Card Modifications */

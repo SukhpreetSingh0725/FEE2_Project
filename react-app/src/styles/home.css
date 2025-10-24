@@ -84,42 +84,6 @@ main {
     margin-right: auto;
 }
 
-/* CTA BUTTON (Primary Call to Action) - Enhanced Quality */
-.cta-button {
-  display: inline-block;
-  text-decoration: none;
-  padding: 15px 35px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  border-radius: 8px;
-  border: none; /* Ensure no default border interferes */
-  color: white;
-  cursor: pointer;
-  
-  /* 💥 Modern Look: Gradient for Depth */
-  background-color: #00aaff;
-  background-image: linear-gradient(145deg, #00aaff 0%, #008fcc 100%);
-  
-  /* 💥 Subtle Shadow: Lifts the button */
-  box-shadow: 0 4px 10px rgba(0, 150, 255, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  
-  transition: all 0.2s ease-in-out;
-}
-
-.cta-button:hover {
-  /* Subtle shift on hover */
-  background-color: #0088cc;
-  background-image: linear-gradient(145deg, #008fcc 0%, #0077b3 100%);
-  transform: translateY(-2px); 
-  box-shadow: 0 6px 15px rgba(0, 150, 255, 0.6); /* Deeper shadow on hover */
-}
-
-.cta-button:active {
-  /* Push-down effect */
-  transform: translateY(0);
-  box-shadow: 0 2px 5px rgba(0, 150, 255, 0.4);
-}
-
 /* FEATURES GRID */
 .features-grid {
     display: grid;
@@ -132,13 +96,62 @@ main {
 }
 
 .feature-card {
-    background-color: #2b2b4a; /* Slightly lighter dark background for contrast */
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    border: 1px solid rgba(0, 170, 255, 0.1);
+  position: relative; 
+  overflow: hidden; 
+  padding: 30px;
+  z-index: 1; 
+  transition: all 0.3s ease; 
+  border: none;
+  box-shadow: none;
 }
+
+/* 2. The Spinning Border Effect (::before) - FIXED FOR SEAMLESS MOTION */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  /* 💥 FIX: Adjusted gradient for continuous, seamless glow */
+  background: conic-gradient(
+      transparent, 
+      rgba(0, 229, 255, 0.6) 20deg,    /* Start the light (more intense) */
+      rgba(0, 229, 255, 0.1) 160deg,   /* Light fades to a subtle background glow */
+      transparent 360deg              /* Seamlessly connects back to the start */
+  );
+  z-index: -1;
+  animation: rotateBorder 4s linear infinite; 
+}
+
+/* 3. Inner Content Layer (::after) - Creates a visual "border" frame */
+.feature-card::after {
+  content: '';
+  position: absolute;
+  inset: 2px; 
+  background-color: #2b2b4a; 
+  border-radius: 10px; 
+  z-index: 0;
+}
+
+/* 4. Fix content Z-index (No change, but essential) */
+.feature-card h3, 
+.feature-card p,
+.feature-card i {
+  position: relative;
+  z-index: 2; 
+}
+
+/* 5. The Keyframes for Rotation (No change) */
+@keyframes rotateBorder {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
 
 .feature-card:hover {
     transform: translateY(-5px); /* Lift effect on hover */
@@ -392,5 +405,65 @@ main {
   .form-container {
     height: auto; /* Allow form to naturally expand */
     padding: 1rem;
+  }
+}
+
+
+
+
+.feature-card {
+  position: relative; 
+  overflow: hidden; 
+  padding: 30px;
+  z-index: 1; 
+  transition: all 0.3s ease; 
+  border: none;
+  box-shadow: none;
+}
+
+/* 2. The Spinning Border Effect (::before) - FIXED FOR SEAMLESS MOTION */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  /* 💥 FIX: Adjusted gradient for continuous, seamless glow */
+  background: conic-gradient(
+      transparent, 
+      rgba(0, 229, 255, 0.6) 20deg,    /* Start the light (more intense) */
+      rgba(0, 229, 255, 0.1) 160deg,   /* Light fades to a subtle background glow */
+      transparent 360deg              /* Seamlessly connects back to the start */
+  );
+  z-index: -1;
+  animation: rotateBorder 4s linear infinite; 
+}
+
+/* 3. Inner Content Layer (::after) - Creates a visual "border" frame */
+.feature-card::after {
+  content: '';
+  position: absolute;
+  inset: 2px; 
+  background-color: #2b2b4a; 
+  border-radius: 10px; 
+  z-index: 0;
+}
+
+/* 4. Fix content Z-index (No change, but essential) */
+.feature-card h3, 
+.feature-card p,
+.cta-button i {
+  position: relative;
+  z-index: 2; 
+}
+
+/* 5. The Keyframes for Rotation (No change) */
+@keyframes rotateBorder {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
   }
 }
