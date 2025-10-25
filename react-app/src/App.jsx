@@ -16,6 +16,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
+import FlashcardsPage from './pages/FlashcardsPage';
 
 
 // 2. YOUR CUSTOM STYLES HERE
@@ -41,6 +42,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/flashcards" element={<FlashcardsPage />} />
+  
         </Routes>
       </main>
       <Footer />

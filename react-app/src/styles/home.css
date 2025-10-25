@@ -467,3 +467,277 @@ main {
       transform: rotate(360deg);
   }
 }
+
+
+
+
+
+
+
+
+/* src/styles/profile.css */
+
+.profile-container {
+  max-width: 900px;
+  margin: 110px auto;
+  padding: 40px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.profile-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #00aaff;
+  text-align: center;
+}
+
+.profile-details p {
+  font-size: 1rem;
+  margin: 8px 0;
+  color: #00aaff;
+}
+
+/* Flashcards section */
+.profile-flashcards {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.flashcard-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flashcard-preview-card {
+  background-color: #343030;
+  padding: 18px 22px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+  margin-top: 15px;
+}
+
+.flashcard-preview-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Updated colors for question and answer */
+.flashcard-question {
+  font-weight: 600;
+  color: #00aaff; /* Blue color for question */
+}
+
+.flashcard-answer {
+  margin-top: 8px;
+  color: #00aaff; /* Lighter blue for answer */
+}
+
+/* View All Flashcards Button */
+.view-all-flashcards-btn {
+  display: inline-block;
+  padding: 12px 30px; /* Increased size */
+  margin-top: 19px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #00aaff; /* Same as Go to Chat button */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 170, 255, 0.4); /* Shadow added */
+  transition: all 0.3s ease;
+}
+
+.view-all-flashcards-btn:hover {
+  transform: scale(1.05); /* Slight size increase */
+  box-shadow: 0 8px 22px rgba(0, 170, 255, 0.5);
+}
+
+/* Start Chat Button */
+.start-chat-btn {
+  display: inline-block;
+  padding: 16px 35px;
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: #00aaff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 170, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.start-chat-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 22px rgba(0, 170, 255, 0.5);
+}
+
+/* No flashcards message */
+.no-cards-msg {
+  margin-top: 10px;
+  color: #888;
+  font-style: italic;
+}
+
+
+
+
+
+
+/* flashcardpage css */
+
+
+
+/* src/styles/flashcards.css */
+
+/* Flashcards Page Container */
+.flashcards-page-container {
+  width: 55%;      
+  margin: 110px auto;     
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Page Title */
+.flashcards-page-title {
+  text-align: center;
+  color: #00aaff;
+  margin-bottom: 25px;
+  font-size: 2rem;
+}
+
+/* Search Input */
+.flashcards-search-input {
+  padding: 10px 12px;
+  margin-bottom: 25px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+/* Flashcards Grid */
+.flashcards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* Individual Flashcard */
+.flashcard-card {
+  background-color: #fafafa;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flashcard-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Flashcard Question/Answer Colors */
+.flashcard-question {
+  color: #ff6600;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.flashcard-answer {
+  color: #00aaff;
+  font-weight: 500;
+}
+
+/* Delete Button */
+.delete-flashcard-btn {
+  padding: 8px 16px;
+  margin-top: 10px;
+  background-color: #ff4d4f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.delete-flashcard-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Back to Profile Button */
+.back-to-profile-btn {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 28px;
+  background-color: #00aaff;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-to-profile-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* --- MEDIA QUERIES --- */
+@media screen and (max-width: 768px) {
+  .flashcards-page-container {
+    margin: 110px auto;
+    width: 80%;
+    padding: 15px;
+  }
+  
+  .flashcards-page-title {
+    font-size: 1.6rem;
+  }
+  
+  .flashcards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .back-to-profile-btn {
+    padding: 10px 22px;
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .flashcards-page-container {
+    margin: 15px 10px;
+    padding: 12px;
+    
+  }
+  
+  .flashcards-page-title {
+    font-size: 1.4rem;
+  }
+  
+  .flashcards-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .back-to-profile-btn {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+
+
