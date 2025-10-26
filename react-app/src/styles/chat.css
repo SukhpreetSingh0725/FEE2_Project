@@ -1,73 +1,270 @@
 /* src/styles/chat.css */
 
+/*
+|--------------------------------------------------------------------------
+| PAGE LAYOUT AND GRID FOR SIDEBAR TOGGLE (GEMINI LAYOUT)
+|--------------------------------------------------------------------------
+*/
+
 #chat-interface {
-    /* Ensures the interface area fills the main space */
     flex-grow: 1;
     padding: 20px;
-    max-width: 1600px;
-    margin: 110px auto; /* Center the whole component wrapper */
+    max-width: 1200px;
+    margin: 90px auto 40px auto; 
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
-/* --- Container Wrapper for Chat and Flashcards (Advanced Layout) --- */
+/* --- Container Wrapper for Chat and Flashcards (The Gemini Layout) --- */
 .chat-container-wrapper {
-    display: flex;
-    gap: 50px;
+    display: grid;
+    /* CRITICAL: Defines the two columns. Sidebar fixed 350px, Chat 1fr. */
+    grid-template-columns: 350px 1fr;
+    gap: 20px;
     min-height: 80vh;
+    transition: grid-template-columns 0.3s ease-in-out;
+    overflow: hidden;
+    width: 100%;
 }
 
-.chat-window-main {
-    flex: 3; /* Chat takes up 3 parts of the space (e.g., 60-70%) */
-    display: flex;
-    flex-direction: column;
+.sidebar-closed.chat-container-wrapper {
+    /* When closed, the sidebar column collapses to 0px, making the chat 1fr (full width). */
+    grid-template-columns: 0px 1fr; 
+    gap: 0;
 }
 
-.chat-window-main h1 {
-    margin-bottom: 20px;
-    text-align: center;
+
+/*
+|--------------------------------------------------------------------------
+| TOGGLE BUTTONS (OPEN/CLOSE)
+|--------------------------------------------------------------------------
+*/
+
+/* Button to close the sidebar (inside the sidebar header) */
+.sidebar-toggle-btn {
+    background: none;
+    color: #00aaff;
+    border: 1px solid #00aaff;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
 }
+.sidebar-toggle-btn:hover {
+    background: #00aaff;
+    color: white;
+}
+
+/* Button to open the sidebar (floats next to the chat when closed) */
+.sidebar-open-btn {
+    background: #00aaff;
+    color: white;
+    border: none;
+    padding: 8px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+    
+    /* Position to make it look like it's attached to the chat window's edge */
+    position: absolute;
+    left: 0px; 
+    z-index: 10;
+}
+.sidebar-open-btn:hover {
+    background: #008fcc;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| FLASHCARDS SIDEBAR
+|--------------------------------------------------------------------------
+*/
 
 .flashcards-sidebar {
-    flex: 1.5; /* Flashcards take up 1.5 parts of the space (e.g., 30-40%) */
+    width: 350px; 
+    flex-shrink: 0;
     padding: 17px;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.3); /* Slightly darker background */
+    background-color: rgba(0, 0, 0, 0.3); 
     border: 1px solid #00aaff;
     overflow-y: auto;
+    
+    transition: transform 0.3s ease-in-out; 
+}
+
+.sidebar-closed .flashcards-sidebar {
+    /* Hides the sidebar content visually when column width is 0 */
+    transform: translateX(-100%); 
+    border: none;
+    padding: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #00e5ff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .flashcards-sidebar h2 {
     color: #00e5ff;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #00e5ff;
-    padding-bottom: 10px;
-    text-align: center;
+    margin: 0;
 }
-/* Add to src/styles/chat.css */
 
-/* Style the action buttons container */
+.flashcard-content {
+    padding-top: 5px; 
+}
+
+/* --- FLASHCARD FORMS --- */
+
+.flashcard-input-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #04f2e2;
+}
+
+.flashcard-input-form input,
+.flashcard-input-form textarea {
+    width: 100%;
+    margin-bottom: 0; 
+    padding: 8px;
+    border: 1px solid #00aaff;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+}
+
+.flashcard-input-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.flashcard-input-form button:hover {
+    background-color: #008fcc;
+}
+
+/* --- FLASHCARD LIST ITEMS --- */
+
+.flashcard-card {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid #00aaff;
+    color: #fff; 
+}
+
+.flashcard-question {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.flashcard-answer {
+    margin-top: 5px;
+    padding: 5px 0;
+    color: #00aaff;
+    border-top: 1px dashed #555;
+}
+
 .flashcard-card .flashcard-actions {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
 }
 
-/* Style for the Delete Button */
-.delete-card-btn {
-    background-color: #f44336; /* Red background */
-    color: white;
-    border: none;
+.toggle-answer-btn, .delete-card-btn {
     padding: 5px 10px;
+    margin-top: 5px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.8rem;
     transition: background-color 0.3s;
+    border: none;
 }
 
+.toggle-answer-btn {
+    background-color: #444;
+    color: white;
+}
+.toggle-answer-btn:hover {
+    background-color: #555;
+}
+
+.delete-card-btn {
+    background-color: #f44336; 
+    color: white;
+}
 .delete-card-btn:hover {
     background-color: #d32f2f;
 }
 
-/* --- CHAT WINDOW STYLES --- */
+
+.view-all-btn, .clear-all-btn {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    border: none;
+}
+
+.view-all-btn {
+    background-color: #00aaff;
+    color: white;
+}
+
+.clear-all-btn {
+    background-color: #d33;
+    color: white;
+}
+.view-all-btn:hover { background-color: #008fcc; }
+.clear-all-btn:hover { background-color: #a32f2f; }
+
+
+.no-cards-msg {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/*
+|--------------------------------------------------------------------------
+| MAIN CHAT WINDOW
+|--------------------------------------------------------------------------
+*/
+
+.chat-window-main {
+    display: flex;
+    flex-direction: column;
+    position: relative; 
+}
+
+.chat-window-main h1 {
+    color: #fff;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 15px;
+    margin-left: 25px;
+}
+
 .chat-window {
     display: flex;
     flex-direction: column;
@@ -80,10 +277,23 @@
 
 .message-list {
     flex-grow: 1;
+    max-height: calc(80vh - 150px);
     padding: 15px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+}
+
+/* Customize scrollbar (optional, for aesthetics) */
+.message-list::-webkit-scrollbar {
+    width: 6px;
+}
+.message-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 170, 255, 0.5);
+    border-radius: 3px;
+}
+.message-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .message {
@@ -105,6 +315,7 @@
     border-radius: 20px;
     line-height: 1.4;
     font-size: 1rem;
+    word-wrap: break-word;
 }
 
 .message.user .message-bubble {
@@ -115,14 +326,14 @@
 
 .message.ai .message-bubble {
     background-color: #333;
-    color: #04f2e2; /* Updated AI color */
+    color: #04f2e2; 
     border-bottom-left-radius: 5px;
 }
 
 /* Chat Input Form */
 .chat-input-form {
     display: flex;
-    padding: 10px;
+    padding: 10px 15px;
     border-top: 1px solid #00aaff;
     background-color: #1a1a1a;
 }
@@ -131,104 +342,23 @@
     flex-grow: 1;
     padding: 10px;
     border: 1px solid #555;
-    border-radius: 5px 0 0 5px;
+    border-radius: 20px; 
+    margin-right: 10px;
     background-color: #2a2a2a;
     color: white;
 }
 
 .chat-input-form button {
-    padding: 10px 15px;
+    padding: 10px 20px;
     background-color: #00aaff;
     color: white;
     border: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 20px; 
     cursor: pointer;
+    font-weight: bold;
     transition: background-color 0.3s;
 }
 
 .chat-input-form button:hover {
     background-color: #008fcc;
-}
-
-/* --- FLASHCARD STYLES --- */
-.flashcard-input-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px dashed #04f2e2;
-}
-
-.flashcard-input-form input, 
-.flashcard-input-form textarea {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #555;
-    background-color: #2a2a2a;
-    color: white;
-}
-
-.flashcard-input-form button {
-    padding: 8px;
-    background-color: #04f2e2; /* Flashcard save button color */
-    color: #001219;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.flashcard-input-form button:hover {
-    background-color: #04d9cf;
-}
-
-.flashcard-card {
-    background-color: rgba(0, 0, 0, 0.4);
-    padding: 10px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border-left: 3px solid #00aaff;
-}
-
-.flashcard-question {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.toggle-answer-btn {
-    padding: 5px 10px;
-    margin-top: 5px;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-}
-
-.flashcard-answer {
-    margin-top: 5px;
-    padding: 5px 0;
-    color: #00aaff;
-    border-top: 1px dashed #555;
-}
-
-.no-cards-msg {
-    text-align: center;
-    color: #999;
-    font-style: italic;
-    margin-top: 20px;
-}
-
-/* Responsive adjustments for the two-column layout */
-@media (max-width: 900px) {
-    .chat-container-wrapper {
-        flex-direction: column; /* Stack chat and flashcards vertically */
-    }
-
-    .chat-window-main, .flashcards-sidebar {
-        flex: none;
-        width: 100%;
-    }
 }
