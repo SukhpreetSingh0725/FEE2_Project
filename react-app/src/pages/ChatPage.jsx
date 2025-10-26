@@ -2,9 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
+
+const MAX_GUEST_MESSAGES = 5; // limit for unregistered users
 
 const getInitialFlashcards = (userId) => {
+  // Use 'guest' key if userId is null/undefined
   const savedData = localStorage.getItem(`sparkq_flashcards_${userId || 'guest'}`);
   return savedData ? JSON.parse(savedData) : [];
 };
@@ -18,26 +21,46 @@ function ChatPage() {
   ]);
   const [input, setInput] = useState('');
 
+  // 1. Initialize flashcards using the current user (or 'guest')
   const [flashcards, setFlashcards] = useState(() => getInitialFlashcards(user?.id));
   const [newQuestion, setNewQuestion] = useState('');
   const [newAnswer, setNewAnswer] = useState('');
   const [showAnswer, setShowAnswer] = useState({});
+  
+  // 2. Initialize guest message count from localStorage
+  const [guestMessageCount, setGuestMessageCount] = useState(
+    Number(localStorage.getItem('sparkq_guest_message_count') || 0)
+  );
+  
+  // 🔑 KEY FIX: Reset local counter state when user logs in (isLoggedIn changes from false to true)
+  useEffect(() => {
+    if (isLoggedIn) {
+      // The actual localStorage item is cleared in AuthContext.login, 
+      // we only need to update the local state here.
+      setGuestMessageCount(0); 
+    }
+  }, [isLoggedIn]);
 
+
+  // 🔑 KEY FIX: Load the correct flashcards when the user object changes (login/logout)
+  useEffect(() => {
+    setFlashcards(getInitialFlashcards(user?.id));
+  }, [user]);
+
+  
   // Save flashcards to localStorage
   useEffect(() => {
-    if (isLoggedIn && user?.id) {
-      localStorage.setItem(`sparkq_flashcards_${user.id}`, JSON.stringify(flashcards));
-    } else {
-      localStorage.setItem(`sparkq_flashcards_guest`, JSON.stringify(flashcards));
-    }
-  }, [flashcards, isLoggedIn, user]);
+    // Use the appropriate key (user ID or 'guest')
+    const storageKey = `sparkq_flashcards_${user?.id || 'guest'}`; 
+    localStorage.setItem(storageKey, JSON.stringify(flashcards));
+  }, [flashcards, user]);
 
   // Add new flashcard
   const handleAddFlashcard = async (e) => {
     e.preventDefault();
     if (newQuestion.trim() === '' || newAnswer.trim() === '') return;
 
-    // Guest users
+    // Guest users check
     if (!isLoggedIn) {
       const result = await Swal.fire({
         title: "Create an account to save flashcards!",
@@ -75,11 +98,38 @@ function ChatPage() {
     });
   };
 
-  // Handle chat message
-  const handleSend = (e) => {
+  // Handle chat message with guest limit
+  const handleSend = async (e) => {
     e.preventDefault();
     if (input.trim() === '') return;
 
+    if (!isLoggedIn) {
+      // Always read the current count from localStorage for reliability
+      const currentGuestCount = Number(localStorage.getItem('sparkq_guest_message_count') || 0);
+
+      if (currentGuestCount >= MAX_GUEST_MESSAGES) {
+        const result = await Swal.fire({
+          title: "Limit Reached 🚫",
+          text: `You’ve used your ${MAX_GUEST_MESSAGES} free messages. Create an account to continue chatting!`,
+          icon: "info",
+          showCancelButton: true,
+          confirmButtonText: "Sign Up Now",
+          cancelButtonText: "Later",
+          confirmButtonColor: "#00aaff",
+          cancelButtonColor: "#aaa"
+        });
+
+        if (result.isConfirmed) navigate('/login');
+        return;
+      } else {
+        // Increment and update both localStorage and the local state
+        const newCount = currentGuestCount + 1;
+        localStorage.setItem('sparkq_guest_message_count', newCount);
+        setGuestMessageCount(newCount); 
+      }
+    }
+
+    // Normal send message logic
     const newUserMessage = { id: messages.length + 1, text: input, sender: 'user' };
     setMessages(prev => [...prev, newUserMessage]);
     setInput('');
@@ -139,6 +189,20 @@ function ChatPage() {
               />
               <button type="submit">Send</button>
             </form>
+
+            {/* --- Guest message counter --- */}
+            {!isLoggedIn && (
+              <p style={{
+                marginTop: '8px',
+                textAlign: 'center',
+                color: guestMessageCount >= MAX_GUEST_MESSAGES ? '#ff4d4f' : '#888',
+                fontSize: '0.9rem'
+              }}>
+                {guestMessageCount < MAX_GUEST_MESSAGES
+                  ? `💬 ${MAX_GUEST_MESSAGES - guestMessageCount} free messages left`
+                  : `⚠️ Free limit reached — sign up to continue`}
+              </p>
+            )}
           </div>
         </div>
 

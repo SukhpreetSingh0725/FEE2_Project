@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'; // <-- ADD THIS IMPORT
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './context/AuthProvider';
 
 // import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css';
 

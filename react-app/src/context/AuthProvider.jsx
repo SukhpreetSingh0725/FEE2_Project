@@ -1,8 +1,7 @@
-// src/context/AuthContext.jsx
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-const AuthContext = createContext();
+// 💡 Import the context object from the new file
+import { AuthContext } from './AuthContext'; 
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,13 +16,11 @@ export const AuthProvider = ({ children }) => {
         
         if (token && storedUser) {
             try {
-                // Assuming currentUser is stored as a JSON string
                 const userData = JSON.parse(storedUser);
                 setIsLoggedIn(true);
                 setUser(userData);
             } catch (error) {
                 console.error("Failed to parse stored user data:", error);
-                // Clear invalid data
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('currentUser');
             }
@@ -34,10 +31,12 @@ export const AuthProvider = ({ children }) => {
     // Function called upon successful login/signup
     const login = (userData, token) => {
         localStorage.setItem('authToken', token);
-        // Store user object as a string
         localStorage.setItem('currentUser', JSON.stringify(userData)); 
         setIsLoggedIn(true);
         setUser(userData);
+        
+        // Reset the guest message count upon successful login
+        localStorage.removeItem('sparkq_guest_message_count'); 
     };
 
     // Function called for logout
@@ -46,7 +45,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('currentUser');
         setIsLoggedIn(false);
         setUser(null);
-        navigate('/login'); // Redirect to login page
+        navigate('/login');
     };
 
     const value = {
@@ -59,12 +58,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {!loading && children} 
         </AuthContext.Provider>
     );
-};
-
-// Custom Hook for easy access
-export const useAuth = () => {
-    return useContext(AuthContext);
 };

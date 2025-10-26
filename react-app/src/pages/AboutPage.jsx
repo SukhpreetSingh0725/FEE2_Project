@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // To personalize CTA
+import { useAuth } from '../context/useAuth';
 
 function AboutPage() {
     // Get login status to customize the final CTA
