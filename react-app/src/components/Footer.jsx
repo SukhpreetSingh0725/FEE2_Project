@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link for navigation
+import { FaTwitter, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 function Footer() {
   return (
@@ -11,12 +12,11 @@ function Footer() {
         <p>Empowering users to chat with AI in real-time and improve productivity.</p>
         
         <div className="social-icons">
-          {/* Note: Ensure your CSS/font supports these Unicode characters/icons */}
-          <a href="#">&#xf099;</a> {/* Twitter */}
-          <a href="#">&#xf09a;</a> {/* Facebook */}
-          <a href="#">&#xf16d;</a> {/* Instagram */}
-          <a href="#">&#xf08c;</a> {/* LinkedIn */}
-        </div>
+          <a href="#"><FaTwitter /></a>
+          <a href="#"><FaFacebook /></a>
+          <a href="#"><FaInstagram /></a>
+          <a href="#"><FaLinkedin /></a>
+          </div>
         
         {/* Changed class to className */}
         <a href="#top" className="back-to-top">Back to Top</a> 
