@@ -3,6 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
+import axios from "axios";
+import { marked } from "marked";
+marked.setOptions({ breaks: true });
+
+
 
 const MAX_GUEST_MESSAGES = 5; // limit for unregistered users
 
@@ -18,28 +23,27 @@ function ChatPage() {
 
     const messagesEndRef = useRef(null);
     
-    // 💡 NEW STATE: Controls the visibility of the flashcards sidebar
+    // Controls the visibility of the flashcards sidebar
     const [isSidebarOpen, setIsSidebarOpen] = useState(true); 
 
     const [messages, setMessages] = useState([
         { id: 1, text: "Hello! I am SparkQ, your AI assistant. How can I help you today?", sender: 'ai' }
     ]);
     const [input, setInput] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    // 1. Initialize flashcards using the current user (or 'guest')
+    // Flashcard State
     const [flashcards, setFlashcards] = useState(() => getInitialFlashcards(user?.id));
     const [newQuestion, setNewQuestion] = useState('');
     const [newAnswer, setNewAnswer] = useState('');
     const [showAnswer, setShowAnswer] = useState({});
     
-    // 2. Initialize guest message count from localStorage
+    // Guest message count state
     const [guestMessageCount, setGuestMessageCount] = useState(
         Number(localStorage.getItem('sparkq_guest_message_count') || 0)
     );
 
-
     const scrollToBottom = () => {
-        // Scroll the div linked to this ref to the bottom
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" ,block: "end" });
     };
 
@@ -47,28 +51,24 @@ function ChatPage() {
         scrollToBottom();
     }, [messages]);
     
-    // 🔑 KEY FIX: Reset local counter state when user logs in (isLoggedIn changes from false to true)
+    // Reset local counter state when user logs in
     useEffect(() => {
         if (isLoggedIn) {
-            // The actual localStorage item is cleared in AuthContext.login, 
-            // we only need to update the local state here.
             setGuestMessageCount(0); 
         }
     }, [isLoggedIn]);
 
-
-    // 🔑 KEY FIX: Load the correct flashcards when the user object changes (login/logout)
+    // Load the correct flashcards when the user object changes (login/logout)
     useEffect(() => {
         setFlashcards(getInitialFlashcards(user?.id));
     }, [user]);
 
-    
-    // Save flashcards to localStorage
+    // Save flashcards to localStorage whenever they change
     useEffect(() => {
-        // Use the appropriate key (user ID or 'guest')
         const storageKey = `sparkq_flashcards_${user?.id || 'guest'}`; 
         localStorage.setItem(storageKey, JSON.stringify(flashcards));
     }, [flashcards, user]);
+
 
     // Add new flashcard
     const handleAddFlashcard = async (e) => {
@@ -102,7 +102,7 @@ function ChatPage() {
         setFlashcards(prevCards => [...prevCards, newCard]);
         setNewQuestion('');
         setNewAnswer('');
-        setShowAnswer({}); // Reset answers display
+        setShowAnswer({}); 
 
         Swal.fire({
             title: "Flashcard Saved!",
@@ -113,15 +113,14 @@ function ChatPage() {
         });
     };
 
-    // Handle chat message with guest limit
+    // Handle chat message with guest limit and API call
     const handleSend = async (e) => {
         e.preventDefault();
         if (input.trim() === '') return;
-
+    
         if (!isLoggedIn) {
-            // Always read the current count from localStorage for reliability
             const currentGuestCount = Number(localStorage.getItem('sparkq_guest_message_count') || 0);
-
+    
             if (currentGuestCount >= MAX_GUEST_MESSAGES) {
                 const result = await Swal.fire({
                     title: "Limit Reached 🚫",
@@ -133,32 +132,40 @@ function ChatPage() {
                     confirmButtonColor: "#00aaff",
                     cancelButtonColor: "#aaa"
                 });
-
+    
                 if (result.isConfirmed) navigate('/login');
                 return;
             } else {
-                // Increment and update both localStorage and the local state
                 const newCount = currentGuestCount + 1;
                 localStorage.setItem('sparkq_guest_message_count', newCount);
-                setGuestMessageCount(newCount); 
+                setGuestMessageCount(newCount);
             }
         }
-
-        // Normal send message logic
+    
+        // Add user's message
         const newUserMessage = { id: messages.length + 1, text: input, sender: 'user' };
         setMessages(prev => [...prev, newUserMessage]);
+        const prompt = input; // Use input as the prompt for the AI
         setInput('');
-
-        setTimeout(() => simulateAiResponse(input), 500);
+    
+        // Call Express Backend (which calls Gemini API)
+        setLoading(true);
+        try {
+            // Hitting your local Express server on port 5000
+            const res = await axios.post("http://localhost:5000/api/ask", { prompt }); 
+            
+            // Access the 'reply' field from the server's response
+            const reply = res.data.reply || "Sorry, I didn’t understand that."; 
+            
+            setMessages(prev => [...prev, { id: prev.length + 1, text: reply, sender: 'ai' }]);
+        } catch (err) {
+            console.error("Gemini API error:", err);
+            setMessages(prev => [...prev, { id: prev.length + 1, text: "⚠️ Error connecting to SparkQ server.", sender: 'ai' }]);
+        } finally {
+            setLoading(false);
+        }
     };
-
-    const simulateAiResponse = (text) => {
-        let response = "That's an interesting question!";
-        if (text.toLowerCase().includes('react')) response = "React is great for building UI!";
-        else if (text.toLowerCase().includes('hello')) response = "Hi there! How’s your learning going?";
-        setMessages(prev => [...prev, { id: prev.length + 1, text: response, sender: 'ai' }]);
-    };
-
+    
     // Clear all flashcards
     const handleClearAll = () => {
         Swal.fire({
@@ -179,27 +186,24 @@ function ChatPage() {
         });
     };
     
-    // 💡 NEW TOGGLE FUNCTION
+    // Toggle sidebar visibility
     const toggleSidebar = () => {
         setIsSidebarOpen(prev => !prev);
     };
 
     return (
         <section id="chat-interface">
-            {/* 💡 APPLY CLASS BASED ON STATE */}
             <div className={`chat-container-wrapper ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
 
-                {/* --- FLASHCARDS SIDEBAR (Placed First for Left Alignment in Grid) --- */}
+                {/* --- FLASHCARDS SIDEBAR --- */}
                 <div className="flashcards-sidebar">
                     <div className="sidebar-header">
                         <h2>My Flashcards</h2>
-                        {/* 💡 Close button visible when sidebar is open */}
                         <button className="sidebar-toggle-btn" onClick={toggleSidebar} title="Close Sidebar">
                             X
                         </button>
                     </div>
                     
-                    {/* Wrap content to allow for cleaner sidebar hiding/showing */}
                     <div className="flashcard-content"> 
                         <form className="flashcard-input-form" onSubmit={handleAddFlashcard}>
                             <input
@@ -263,7 +267,7 @@ function ChatPage() {
                 {/* --- MAIN CHAT WINDOW --- */}
                 <div className="chat-window-main">
                     
-                    {/* 💡 OPEN BUTTON: Appears when sidebar is CLOSED */}
+                    {/* OPEN BUTTON: Appears when sidebar is CLOSED */}
                     {!isSidebarOpen && (
                         <button 
                             className="sidebar-open-btn" 
@@ -277,11 +281,27 @@ function ChatPage() {
                     <h1>SparkQ Chat</h1>
                     <div className="chat-window">
                         <div className="message-list">
-                            {messages.map((msg) => (
-                                <div key={msg.id} className={`message ${msg.sender}`}>
-                                    <div className="message-bubble">{msg.text}</div>
-                                </div>
-                            ))}
+                        {messages.map((msg) => (
+  <div key={msg.id} className={`message ${msg.sender}`}>
+    {msg.sender === 'ai' ? (
+      <div
+        className="message-bubble bot-message"
+        dangerouslySetInnerHTML={{
+            __html: marked.parse(msg.text, { mangle: false, headerIds: false })
+          }}
+          
+      ></div>
+    ) : (
+      <div className="message-bubble">{msg.text}</div>
+    )}
+  </div>
+))}
+
+                            {/* Show AI typing indicator while waiting for response */}
+                            {loading && (
+                                <div className="message ai">
+                                    <div className="message-bubble"> 🤔 Thinking...</div>
+                                </div>)}
                             <div ref={messagesEndRef} style={{ height: 0 }} />
                         </div>
 
@@ -292,7 +312,7 @@ function ChatPage() {
                                 onChange={(e) => setInput(e.target.value)}
                                 placeholder="Ask me anything..."
                             />
-                            <button type="submit">Send</button>
+                            <button type="submit" disabled={loading}>Send</button>
                         </form>
 
                         {/* --- Guest message counter --- */}

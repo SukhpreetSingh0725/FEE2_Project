@@ -320,16 +320,35 @@
 }
 
 .message.user .message-bubble {
-    background-color: #00aaff;
+    background-color: rgba(147, 149, 151, 0.2);
     color: white;
     border-bottom-right-radius: 5px;
 }
 
 .message.ai .message-bubble {
-    background-color: #333;
-    color: #04f2e2; 
+    background-color: rgba(147, 149, 151, 0.2);
+    color: #f4f4f4; 
     border-bottom-left-radius: 5px;
 }
+
+.bot-message {
+    white-space: pre-wrap;
+    line-height: 1.6;
+  }
+  
+  .bot-message p {
+    margin: 8px 0;
+  }
+  
+  .bot-message ul, .bot-message ol {
+    margin-left: 20px;
+  }
+  
+  .bot-message strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
 
 /* Chat Input Form */
 .chat-input-form {
