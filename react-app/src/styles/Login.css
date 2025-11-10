@@ -7,7 +7,7 @@
  .container {
   /* FIX: Remove fixed width/height and let content define it, while centering the block */
   width: 450px; /* Keep this max size for the card */
-  min-height: 500px; /* Use min-height to ensure the card can grow */
+  min-height: 580px; /* Use min-height to ensure the card can grow */
   perspective: 1000px;
   position: relative;
   
@@ -99,7 +99,7 @@
 @media (max-width: 600px){
   .container {
       width: 80%;
-      height: auto;
+      min-height: 520px;
       margin: 8rem 3rem 5rem 3rem;
   }
   .form-container input {

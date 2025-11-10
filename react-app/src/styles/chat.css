@@ -24,7 +24,8 @@
     min-height: 80vh;
     transition: grid-template-columns 0.3s ease-in-out;
     overflow: hidden;
-    width: 100%;
+    width: 85%;
+    margin: auto;
 }
 
 .sidebar-closed.chat-container-wrapper {
@@ -361,4 +362,9 @@
 
 .chat-input-form button:hover {
     background-color: #008fcc;
+}
+
+
+@media (max-width: 600px){
+
 }

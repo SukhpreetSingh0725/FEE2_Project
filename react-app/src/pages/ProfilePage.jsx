@@ -81,12 +81,13 @@ function ProfilePage() {
         onClick={() => navigate('/chat')}
         className="start-chat-btn"
         style={{
-          padding: '10px 20px',
+          padding: '11px 30px',
           marginTop: '30px',
+          marginLeft: '80px',
           backgroundColor: '#00aaff',
           color: 'white',
           border: 'none',
-          borderRadius: '5px',
+          borderRadius: '8px',
           cursor: 'pointer'
         }}
       >

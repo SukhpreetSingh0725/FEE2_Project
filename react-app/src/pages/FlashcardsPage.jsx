@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/useAuth';
 import { Navigate, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function FlashcardsPage() {
   const { isLoggedIn, user, loading } = useAuth();
@@ -19,10 +20,32 @@ function FlashcardsPage() {
 
   // Handle deleting a flashcard
   const handleDelete = (id) => {
-    const updatedCards = flashcards.filter(card => card.id !== id);
-    setFlashcards(updatedCards);
-    localStorage.setItem(`sparkq_flashcards_${user.id}`, JSON.stringify(updatedCards));
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "This flashcard will be permanently deleted!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updatedCards = flashcards.filter(card => card.id !== id);
+        setFlashcards(updatedCards);
+        localStorage.setItem(`sparkq_flashcards_${user.id}`, JSON.stringify(updatedCards));
+  
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Your flashcard has been deleted.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    });
   };
+  
 
   // Filter flashcards based on search term
   const filteredFlashcards = flashcards.filter(

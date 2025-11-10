@@ -547,6 +547,7 @@ main {
   display: inline-block;
   padding: 12px 30px; /* Increased size */
   margin-top: 19px;
+  margin-left: 65px;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
@@ -622,9 +623,10 @@ main {
 
 /* Search Input */
 .flashcards-search-input {
-  padding: 10px 12px;
+  padding: 12px 12px;
   margin-bottom: 25px;
-  width: 100%;
+  width: 90%;
+  margin-left:45px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
@@ -635,6 +637,8 @@ main {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
+  width: 90%;
+  margin-left:45px;
 }
 
 /* Individual Flashcard */
@@ -707,14 +711,25 @@ main {
     width: 80%;
     padding: 15px;
   }
+
+  .flashcards-search-input {
+    padding: 12px 12px;
+    margin-bottom: 25px;
+    width: 90%;
+    margin-left:20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
   
   .flashcards-page-title {
     font-size: 1.6rem;
   }
   
   .flashcards-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr ;
     gap: 15px;
+    margin-left:20px;
   }
   
   .back-to-profile-btn {
