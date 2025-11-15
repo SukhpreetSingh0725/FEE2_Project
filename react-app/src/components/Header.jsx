@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
-import { User } from "lucide-react"; // ✅ added icon import
+import { User, Moon, Sun } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 function Header() {
   const { isLoggedIn, user, logout } = useAuth(); 
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { theme, toggleTheme } = useTheme(); // ⭐ Dark/Light Mode
 
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
   const closeMenu = () => setIsMenuOpen(false);
@@ -19,17 +22,21 @@ function Header() {
   return (
     <header className="navbar">
       <div className="logo">SparkQ</div>
+
+      {/* Hamburger */}
       <div className="hamburger" onClick={toggleMenu}>
         <i className={`fas ${isMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
       </div>
 
       <nav className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+
+        {/* MAIN LINKS */}
         <Link to="/" onClick={closeMenu}>Home</Link>
         <Link to="/chat" onClick={closeMenu}>Chat</Link>
         <Link to="/about" onClick={closeMenu}>About</Link>
         <Link to="/contact" onClick={closeMenu}>Contact</Link>
 
-        {/* Conditional Rendering */}
+        {/* AUTH LINKS */}
         {isLoggedIn ? (
           <>
             <Link 
@@ -50,6 +57,19 @@ function Header() {
         ) : (
           <Link to="/login" onClick={closeMenu}>Sign Up / Login</Link>
         )}
+
+        {/* ⭐ DARK / LIGHT MODE TOGGLE */}
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2 mt-2 px-3 py-1 rounded-md 
+                     bg-gray-800 text-white hover:bg-gray-700
+                     dark:bg-gray-200 dark:text-black dark:hover:bg-gray-300 
+                     transition"
+        >
+          {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+          {theme === "light" ? "Dark" : "Light"}
+        </button>
+
       </nav>
     </header>
   );

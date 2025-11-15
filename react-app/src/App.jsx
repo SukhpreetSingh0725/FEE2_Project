@@ -3,6 +3,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'; // <-- ADD THIS IMPORT
 import { AuthProvider } from './context/AuthProvider';
+import { ThemeProvider } from "./context/ThemeContext";  
 
 // import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css';
 
@@ -31,6 +32,7 @@ import './styles/home.css';
 function App() {
   return (
     // 💥 NEW: Wrap your entire application in the AuthProvider
+    <ThemeProvider>
     <AuthProvider>
       <Header /> 
       
@@ -48,6 +50,7 @@ function App() {
       </main>
       <Footer />
     </AuthProvider>
+    </ThemeProvider>
     // 💥 NOTE: If AuthProvider relies on useNavigate (which it does), 
     // it must be a child of BrowserRouter. Please ensure BrowserRouter is in main.jsx.
   );
