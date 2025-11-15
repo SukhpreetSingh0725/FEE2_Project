@@ -174,11 +174,11 @@ function LoginPage() {
 
 
     return (
-        <div className="container">
+        <div className="l-container">
             <div className={`card ${isFlipped ? 'flip' : ''}`} id="card">
 
                 {/* LOGIN FORM */}
-                <form className="form-container login-container" onSubmit={handleLoginSubmit}>
+                <form className="l-form-container l-login-container" onSubmit={handleLoginSubmit}>
                     <h1>Login</h1>
                     <div className="social-icons">
                         <a onClick={() => handleSocialLogin(googleProvider)}><i className="fa-brands fa-google-plus-g"></i></a>
@@ -195,7 +195,7 @@ function LoginPage() {
                         value={loginData.loginConfirmPassword} onChange={handleLoginChange} />
 
                     {/* FORGOT PASSWORD LINK HERE */}
-                    <a href="#" onClick={handleForgotPassword} className="forgot-password-link">
+                    <a href="#" onClick={handleForgotPassword} className="l-forgot-password-link">
                         Forgot your password?
                     </a>
 
@@ -204,7 +204,7 @@ function LoginPage() {
                 </form>
 
                 {/* SIGNUP FORM */}
-                <form className="form-container signup-container" onSubmit={handleSignupSubmit}>
+                <form className="l-form-container l-signup-container" onSubmit={handleSignupSubmit}>
                     <h1>Sign Up</h1>
                     <div className="social-icons">
                         <a onClick={() => handleSocialLogin(googleProvider)}><i className="fa-brands fa-google-plus-g"></i></a>

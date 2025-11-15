@@ -1,12 +1,7 @@
-/* Login/Sign-up Component Styles */
 
-/* * CRITICAL FIX: The new body rule you provided was overriding the global 
- * layout rules (#root, main) needed for the sticky footer. We remove it here.
- */
-
- .container {
+ .l-container {
   /* FIX: Remove fixed width/height and let content define it, while centering the block */
-  width: 450px; /* Keep this max size for the card */
+  width: 500px; /* Keep this max size for the card */
   min-height: 580px; /* Use min-height to ensure the card can grow */
   perspective: 1000px;
   position: relative;
@@ -27,7 +22,7 @@
   transform: rotateY(180deg);
 }
 
-.form-container {
+.l-form-container {
   position: absolute;
   width: 95%;
   height: 100%;
@@ -46,13 +41,16 @@
   text-shadow: 0 0 10px #00e5ffbb;
 }
 
-.form-container h1 {
+.l-form-container h1 {
   margin-bottom: 15px;
   color: #00e5ff;
+  font-size: 35px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight: 700;
 }
 
-.form-container input {
-  width: 100%;
+.l-form-container input {
+  width: 95%;
   padding: 10px;
   margin: 15px 0;
   border-radius: 8px;
@@ -62,7 +60,7 @@
   color: black;     /* Ensure input text is readable */
 }
 
-.form-container button {
+.l-form-container button {
   width: 50%;
   padding: 10px;
   margin-top: 15px;
@@ -74,13 +72,13 @@
   border-radius: 8px;
 }
 
-.form-container a {
+.l-form-container a {
   margin-top: 20px;
   color: #00e5ff;
   cursor: pointer;
 }
 
-.signup-container {
+.l-signup-container {
   transform: rotateY(180deg);
 }
 
@@ -97,28 +95,33 @@
 
 /* Responsive */
 @media (max-width: 600px){
-  .container {
-      width: 80%;
-      min-height: 520px;
-      margin: 8rem 3rem 5rem 3rem;
+  .l-container {
+      width: 85%;
+      min-height: 600px;
+      margin: 7rem 3rem 5rem 3rem;
   }
-  .form-container input {
+  .l-form-container input {
       width: 90%;
   }
-  .form-container h1 {
-    margin-top: 10px;
+  .l-form-container h1 {
+    margin-top: 30px;
+    font-size: 35px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 700;
   }
-  .form-container a {
+  .l-form-container a {
     margin-top: 10px;
     margin-bottom: 15px;
     cursor: pointer;
+  
   }
-  .form-container button {
+  .l-form-container button {
     width: 40%;
     padding: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
+    
   }
 }
 
