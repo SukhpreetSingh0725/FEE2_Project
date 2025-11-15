@@ -1,86 +1,70 @@
 // src/pages/ContactPage.jsx
 
-import React, { useState } from 'react'; // Import the useState hook
+import React, { useState } from "react";
 
-function ContactPage() {
-  // 1. Initialize State for Form Fields
+export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
+    name: "",
+    email: "",
+    message: "",
   });
 
-  // 2. Handle Input Changes (Updates state as the user types)
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value // [name] references the input's 'name' attribute
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
     }));
   };
 
-  // 3. Handle Form Submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // Stop the browser from reloading (default HTML behavior)
+    e.preventDefault();
 
-    // Simple validation check (can be expanded later)
-    if (formData.name.trim() === '' || formData.email.trim() === '' || formData.message.trim() === '') {
-        alert("Please fill in all required fields.");
-        return;
+    if (!formData.name || !formData.email || !formData.message) {
+      alert("Please fill all fields");
+      return;
     }
 
-    // Log the data and show success message
-    console.log('Contact Form Submitted with data:', formData);
-    alert("Your message has been sent successfully!");
+    alert("Your message has been sent!");
+    console.log("Form Submitted:", formData);
 
-    // Clear the form fields after submission
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: "", email: "", message: "" });
   };
 
-
   return (
-    // Converted <section id="contact"> to JSX
-    <section id="contact">
+    <section id="contact-glass">
       <h1>Contact Us</h1>
-      
-      {/* 4. Converted form and attached onSubmit handler */}
+
       <form id="contact-form" onSubmit={handleSubmit}>
-        
-        {/* Input for Name - Connected to State */}
-        <input 
-          type="text" 
-          placeholder="Your Name" 
-          name="name" // CRITICAL: Used by handleChange
+        <input
+          type="text"
+          placeholder="Your Full Name"
+          name="name"
           value={formData.name}
           onChange={handleChange}
-          required 
+          required
         />
-        
-        {/* Input for Email - Connected to State */}
-        <input 
-          type="email" 
-          placeholder="Your Email" 
-          name="email" // CRITICAL: Used by handleChange
+
+        <input
+          type="email"
+          placeholder="Your Email Address"
+          name="email"
           value={formData.email}
           onChange={handleChange}
-          required 
+          required
         />
-        
-        {/* Textarea - Converted and Connected to State */}
-        {/* Note: In React, you use a self-closing <textarea> and control the content with 'value' */}
-        <textarea 
-          rows="4" 
-          placeholder="Your Message" 
-          name="message" // CRITICAL: Used by handleChange
+
+        <textarea
+          placeholder="Your Message"
+          name="message"
+          rows="4"
           value={formData.message}
           onChange={handleChange}
           required
         ></textarea>
-        
+
         <button type="submit">Send Message</button>
       </form>
     </section>
   );
 }
-
-export default ContactPage;
