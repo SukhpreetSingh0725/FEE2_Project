@@ -123,6 +123,35 @@ main {
   line-height: 1.6;
 }
 
+.profile-details {
+  padding: 20px;
+  border: 1px solid #00aaff;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  background-color: rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Logout button INSIDE DETAILS CARD */
+.inside-details {
+  margin-top: 15px;
+  align-self: center;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.inside-details:hover {
+  opacity: 0.8;
+}
+
+
 .hero-cta {
   padding: 16px 40px;
   background: linear-gradient(90deg, #00eaff, #0078ff);
@@ -134,6 +163,7 @@ main {
   margin-top: 24px;
   transition: 0.3s ease;
 }
+
 
 .hero-cta:hover {
   transform: scale(1.06);
@@ -576,37 +606,10 @@ main {
   text-decoration: underline;
 }
 
-.profile-container {
-  /* CRITICAL FIX: Add margin to push content down past the navbar */
-  margin-top: 90px; 
-  
-  /* Optional: Centering and padding for better presentation */
-  padding: 20px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-  min-height: 80vh; /* Ensures a minimum height for good visual space */
-}
+
 
 /* Optional extra styling for your profile content */
-.profile-title {
-  color: #00e5ff;
-  margin-bottom: 30px;
-  text-align: center;
-}
 
-.profile-details {
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 1px solid #00aaff;
-  padding: 25px;
-  border-radius: 10px;
-  color: white;
-}
-
-.profile-details p {
-  margin-bottom: 15px;
-  font-size: 1.1rem;
-}
 
 /* ---------------------------------------------------------------------- */
 /* --- MEDIA QUERIES (Updated) --- */
@@ -709,9 +712,9 @@ main {
 /* src/styles/profile.css */
 
 .profile-container {
-  max-width: 900px;
+  min-width: 450px;
   margin: 100px auto;
-  padding: 15px;
+  padding: 25px;
   background-color: #1a1a1a;
   border-radius: 12px;
   border: 1px solid #00aaff;
@@ -728,7 +731,7 @@ main {
 
 .profile-details p {
   font-size: 1rem;
-  margin: 8px 0;
+  margin: 5px 0;
   color: #00aaff;
 }
 
@@ -789,6 +792,8 @@ main {
   transform: scale(1.05); /* Slight size increase */
   box-shadow: 0 8px 22px rgba(0, 170, 255, 0.5);
 }
+
+
 
 /* Start Chat Button */
 .start-chat-btn {
@@ -936,6 +941,15 @@ main {
     margin: 110px auto;
     width: 80%;
     padding: 15px;
+  }
+  .profile-container {
+    min-width: 400px;
+    margin: 90px auto;
+    padding: 20px;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    border: 1px solid #00aaff;
+    box-shadow: 0 10px 25px rgba(0, 170, 255, 0.3);
   }
 
   .flashcards-search-input {

@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
+import Swal from "sweetalert2";
+
 import { 
     // ALL Firebase Auth functions must be imported correctly from your config file.
     auth,
@@ -78,55 +80,91 @@ function LoginPage() {
     // Email/Password Login
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
-        // Validate all three fields (email, password, confirm password)
-        if (!validateForm(loginData, true)) return; 
-
+      
+        if (!validateForm(loginData, true)) return;
+      
         try {
-            const userCredential = await signInWithEmailAndPassword(auth, loginData.loginEmail, loginData.loginPassword);
-            const user = userCredential.user;
-            login({
-                id: user.uid,
-                name: user.displayName || "User",
-                email: user.email,
-                photoURL: user.photoURL
-            }, user.accessToken);
-
-            setLoginData({ loginEmail: '', loginPassword: '', loginConfirmPassword: '' });
-            navigate('/profile');
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            loginData.loginEmail,
+            loginData.loginPassword
+          );
+      
+          // ⭐ Success Message Only
+          Swal.fire({
+            title: "Logged In!",
+            text: "You have logged in successfully.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+      
+          const user = userCredential.user;
+      
+          login(
+            {
+              id: user.uid,
+              name: user.displayName || "User",
+              email: user.email,
+              photoURL: user.photoURL
+            },
+            user.accessToken
+          );
+      
+          navigate("/profile");
+      
         } catch (error) {
-            alert("Login Failed: " + error.message);
+          Swal.fire("Login Failed", error.message, "error");
         }
-    };
+      };
+      
+      
 
     // Email/Password Signup
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
+      
         if (!validateForm(signupData, false)) return;
-
+      
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, signupData.signupEmail, signupData.signupPassword);
-            const user = userCredential.user;
-
-            // Optional: set display name (requires 'updateProfile' which is often imported from 'firebase/auth')
-            // If updateProfile causes an error, remove the `if` block below.
-            if (user.updateProfile) {
-                await user.updateProfile({ displayName: signupData.signupName });
-            }
-
-            login({
-                id: user.uid,
-                name: signupData.signupName,
-                email: user.email,
-                photoURL: user.photoURL
-            }, user.accessToken);
-
-            setSignupData({ signupName: '', signupEmail: '', signupPassword: '', signupConfirmPassword: '' });
-            navigate('/profile');
+          const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            signupData.signupEmail,
+            signupData.signupPassword
+          );
+      
+          // ⭐ Success Message Only
+          Swal.fire({
+            title: "Account Created!",
+            text: "Signup successful!",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+      
+          const user = userCredential.user;
+      
+          if (user.updateProfile) {
+            await user.updateProfile({ displayName: signupData.signupName });
+          }
+      
+          login(
+            {
+              id: user.uid,
+              name: signupData.signupName,
+              email: user.email,
+              photoURL: user.photoURL
+            },
+            user.accessToken
+          );
+      
+          navigate("/profile");
+      
         } catch (error) {
-            alert("Signup Failed: " + error.message);
+          Swal.fire("Signup Failed", error.message, "error");
         }
-    };
-
+      };
+      
     // Social Logins
     const handleSocialLogin = async (provider) => {
         try {

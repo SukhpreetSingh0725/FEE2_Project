@@ -2,54 +2,69 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
+import Swal from "sweetalert2";
+
 
 function ProfilePage() {
-  const { isLoggedIn, user, loading } = useAuth();
+  const { isLoggedIn, user, loading, logout } = useAuth(); // <-- FIXED (added logout)
   const navigate = useNavigate();
   const [userFlashcards, setUserFlashcards] = useState([]);
 
-  // Load the logged-in user's flashcards from localStorage
   useEffect(() => {
     if (user && user.id) {
       const savedCards = localStorage.getItem(`sparkq_flashcards_${user.id}`);
-      if (savedCards) {
-        setUserFlashcards(JSON.parse(savedCards));
-      } else {
-        setUserFlashcards([]);
-      }
+      setUserFlashcards(savedCards ? JSON.parse(savedCards) : []);
     }
   }, [user]);
 
-  // Loading state
-  if (loading) {
-    return <div className="profile-container">Loading profile...</div>;
-  }
+  if (loading) return <div className="profile-container">Loading profile...</div>;
 
-  // Redirect if not logged in
-  if (!isLoggedIn) {
-    return <Navigate to="/login" replace />;
-  }
+  if (!isLoggedIn) return <Navigate to="/login" replace />;
 
-  // Fallback (should not normally happen)
-  if (!user) {
-    return <div className="profile-container">User data not found. Please log in again.</div>;
-  }
+  if (!user) return <div className="profile-container">User data not found. Please log in again.</div>;
 
-  // Sort flashcards (most recent first)
   const recentFlashcards = [...userFlashcards].reverse().slice(0, 2);
 
   return (
     <div className="profile-container">
       <h1 className="profile-title">Welcome, {user.name || 'User'} 👋</h1>
 
-      {/* --- USER DETAILS --- */}
       <div className="profile-details">
         <p><strong>Name:</strong> {user.name || 'Not Provided'}</p>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>User ID:</strong> {user.id}</p>
+         {/* LOGOUT BUTTON INSIDE USER BOX */}
+         <button
+  onClick={() => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to logout?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ff4444",
+      cancelButtonColor: "#00aaff",
+      confirmButtonText: "Yes, Logout"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout();
+        Swal.fire({
+          title: "Logged out!",
+          text: "You have been logged out successfully.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    });
+  }}
+  className="logout-btn inside-details"
+>
+  Logout
+</button>
+
+
       </div>
 
-      {/* --- RECENT FLASHCARDS --- */}
       <div className="profile-flashcards">
         <h2>📚 Recent Flashcards</h2>
 
@@ -76,23 +91,24 @@ function ProfilePage() {
         )}
       </div>
 
-      {/* --- NAVIGATE TO CHAT --- */}
-      <button
-        onClick={() => navigate('/chat')}
-        className="start-chat-btn"
-        style={{
-          padding: '11px 30px',
-          marginTop: '30px',
-          marginLeft: '80px',
-          backgroundColor: '#00aaff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '8px',
-          cursor: 'pointer'
-        }}
-      >
-        Go to SparkQ Chat
-      </button>
+      {/* --- BUTTON ROW (Chat + Logout) --- */}
+<div style={{ 
+  display: "flex",
+  justifyContent: "center",
+  gap: "15px",
+  marginTop: "30px",
+  
+}}>
+  <button 
+    onClick={() => navigate('/chat')} 
+    className="start-chat-btn"
+  >
+    Go to SparkQ Chat
+  </button>
+
+  
+</div>
+
     </div>
   );
 }

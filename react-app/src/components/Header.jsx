@@ -5,19 +5,14 @@ import { User, Moon, Sun } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
 
 function Header() {
-  const { isLoggedIn, user, logout } = useAuth(); 
-  const navigate = useNavigate();
+  const { isLoggedIn, user, loading, logout } = useAuth();
+ 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { theme, toggleTheme } = useTheme(); // ⭐ Dark/Light Mode
+  const { theme, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsMenuOpen(prev => !prev);
   const closeMenu = () => setIsMenuOpen(false);
-  const handleLogout = () => {
-    logout();
-    closeMenu();
-    navigate('/login');
-  };
 
   return (
     <header className="navbar">
@@ -39,9 +34,10 @@ function Header() {
         {/* AUTH LINKS */}
         {isLoggedIn ? (
           <>
+            {/* PROFILE ONLY — NO LOGOUT HERE */}
             <Link 
               to="/profile" 
-              onClick={closeMenu} 
+              onClick={closeMenu}
               className="flex items-center gap-2"
               title={user?.name || 'Profile'}
             >
@@ -49,16 +45,12 @@ function Header() {
                 <User className="w-5 h-5 text-gray-700" />
               </div>
             </Link>
-
-            <button onClick={handleLogout} className="logout-button">
-              Logout
-            </button>
           </>
         ) : (
           <Link to="/login" onClick={closeMenu}>Sign Up / Login</Link>
         )}
 
-        {/* ⭐ DARK / LIGHT MODE TOGGLE */}
+        {/* DARK/LIGHT TOGGLE */}
         <button
           onClick={toggleTheme}
           className="flex items-center gap-2 mt-2 px-3 py-1 rounded-md 
