@@ -49,6 +49,7 @@ main {
   overflow: hidden;
   background: radial-gradient(circle at top, #0b122e, #02040f 70%);
   color: #fff;
+ 
 }
 
 /* =========================== */
@@ -166,6 +167,7 @@ main {
   cursor: pointer;
   margin-top: 24px;
   transition: 0.3s ease;
+  font-size: 22px;
 }
 
 
@@ -203,6 +205,7 @@ main {
   text-align: center;
   backdrop-filter: blur(6px);
   transition: 0.3s ease;
+  font-size: 18px;
 }
 
 .why-card:hover {
@@ -716,7 +719,7 @@ main {
 /* src/styles/profile.css */
 
 .profile-container {
-  min-width: 450px;
+  min-width: 550px;
   margin: 100px auto;
   padding: 25px;
   background-color: #1a1a1a;
@@ -758,6 +761,7 @@ main {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   transition: transform 0.2s;
   margin-top: 15px;
+
 }
 
 .flashcard-preview-card:hover {
@@ -777,31 +781,28 @@ main {
 
 /* View All Flashcards Button */
 .view-all-flashcards-btn {
-  display: inline-block;
-  padding: 12px 30px; /* Increased size */
-  margin-top: 19px;
-  margin-left: 65px;
+  display: block;         /* fills width so auto margin works */
+  padding: 12px 30px;
+  margin: 20px auto;      /* centers horizontally */
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background: #00aaff; /* Same as Go to Chat button */
+  background: #00aaff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(0, 170, 255, 0.4); /* Shadow added */
+  box-shadow: 0 6px 18px rgba(0, 170, 255, 0.4);
   transition: all 0.3s ease;
+  width: fit-content;     /* prevents stretching */
 }
 
 .view-all-flashcards-btn:hover {
   transform: scale(1.05); /* Slight size increase */
   box-shadow: 0 8px 22px rgba(0, 170, 255, 0.5);
 }
-
-
-
 /* Start Chat Button */
 .start-chat-btn {
-  display: inline-block;
+  display: block;
   padding: 16px 35px;
   margin-top: 20px;
   font-size: 1rem;
@@ -834,6 +835,64 @@ main {
 
 /* flashcardpage css */
 
+/* ==========================================================
+   FLASHCARDS PAGE FLOATING SHAPES (DARK MODE)
+========================================================== */
+
+.flashcards-page-container {
+  position: relative;
+  overflow: hidden; /* so shapes don't overflow */
+  z-index: 1;
+}
+
+/* Base shape class */
+.flashcard-shape {
+  position: absolute;
+  filter: blur(120px);
+  opacity: 0.25;
+  z-index: 0;
+  animation: floatFlashcards 12s ease-in-out infinite;
+}
+
+/* Dark mode shapes */
+.flashcard-shape.shape1 {
+  width: 340px;
+  height: 340px;
+  background: #00eaff;
+  top: -50px;
+  left: -60px;
+}
+
+.flashcard-shape.shape2 {
+  width: 300px;
+  height: 300px;
+  background: #007bff;
+  bottom: -60px;
+  right: -50px;
+}
+
+.flashcard-shape.shape3 {
+  width: 270px;
+  height: 270px;
+  background: #7b00ff;
+  top: 45%;
+  left: 65%;
+}
+
+@keyframes floatFlashcards {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+
+/* Ensure content stays above shapes */
+.flashcards-page-title,
+.flashcards-search-input,
+.flashcards-grid,
+.back-to-profile-btn {
+  position: relative;
+  z-index: 5;
+}
 
 
 /* src/styles/flashcards.css */
@@ -844,8 +903,10 @@ main {
   margin: 110px auto;     
   padding: 20px;
   background-color: #1a1a1a;
+  background-color: #1a1a1a;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 1px solid #00aaff;
+  box-shadow: 0 10px 25px rgba(0, 170, 255, 0.3);
 }
 
 /* Page Title */
@@ -865,6 +926,9 @@ main {
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  color: black;
+  background: linear-gradient(90deg, #b7e1ff, #e3d1d1) !important;
+  
 }
 
 /* Flashcards Grid */
@@ -878,11 +942,13 @@ main {
 
 /* Individual Flashcard */
 .flashcard-card {
-  background-color: #fafafa;
+  padding: 18px 22px;
   border-radius: 10px;
-  padding: 18px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+  margin-top: 15px;
+  background: linear-gradient(90deg, #b7e1ff, #e3d1d1);
+  opacity: 1 !important;
 }
 
 .flashcard-card:hover {
@@ -1004,4 +1070,339 @@ main {
 }
 
 
+/* ---------------- HOME PAGE LIGHT MODE ONLY ---------------- */
+/* ======================================================== */
+/*                      LIGHT MODE OVERRIDES                */
+/* ======================================================== */
 
+.light .home-wrapper {
+  color: #000 !important;
+  background: radial-gradient(circle at top left, #e0f4ff 0%, white 40%),
+              radial-gradient(circle at bottom right, #efe1ff 0%, white 40%);
+}
+
+/* FLOATING SHAPES -> keep blur + glow in light mode */
+.light .floating-shape {
+  filter: blur(90px) !important;
+  opacity: 0.35 !important;
+}
+
+/* Make shapes bright but soft (no solid square issue) */
+.light .shape1 { background: #00c3ff !important; }
+.light .shape2 { background: #0080ff !important; }
+.light .shape3 { background: #7b00ff !important; }
+
+/* HERO SECTION */
+.light .hero-title {
+  color: #005bbb !important;
+  text-shadow: 0 0 6px #005bbb25 !important;
+}
+
+
+.light .hero-text {
+  color: #333 !important;
+}
+
+.light .hero-cta {
+  background: linear-gradient(90deg, #c0e4fe, #ddcccc) !important;
+  color: black!important;
+  font-size: 22px;
+}
+
+.light .hero-cta:hover {
+  box-shadow: 0 0 20px #0b65a660 !important;
+}
+
+/* WHY SPARKQ CARDS */
+.light .why-card {
+  background: linear-gradient(90deg, #b7e1ff, #e3d1d1) !important;
+  border: 1px solid #b8b6b6 !important;
+  backdrop-filter: blur(5px) !important;
+  color: #000 !important;
+  font-size: 18px;
+ 
+}
+
+.light .why-card i {
+  color: #0095ff !important;
+}
+
+/* PREMIUM CARDS — same animation, but lighter background */
+.light .premium-card {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  color: #000 !important;
+}
+
+.light .premium-card:hover {
+  border-color: #0095ff !important;
+  box-shadow: 0 10px 25px rgba(0, 149, 255, 0.25) !important;
+}
+
+.light .premium-icon {
+  color: #0095ff !important;
+}
+
+/* Glow behind rotating border */
+.light .premium-glow {
+  background: conic-gradient(
+    transparent,
+    rgb(0, 72, 255),
+    transparent 270deg
+  ) !important;
+}
+
+/* Premium card text */
+.light .premium-card h3 {
+  color: #000 !important;
+}
+
+.light .premium-card p {
+  color: #000 !important;
+}
+
+/* PARTICLES - keep same effect */
+.light .floating-particles {
+  opacity: 0.12 !important;
+}
+
+
+/* =======================================================
+   FLOATING BACKGROUND SHAPES (DARK MODE)
+======================================================= */
+
+.profile-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Core shape properties */
+.profile-shape {
+  position: absolute;
+  filter: blur(100px);
+  opacity: 0.25;
+  z-index: 0;
+  animation: floatProfile 12s infinite ease-in-out;
+}
+
+.shape1 {
+  width: 300px;
+  height: 300px;
+  background: #00eaff;
+  top: -60px;
+  left: -50px;
+}
+
+.shape2 {
+  width: 260px;
+  height: 260px;
+  background: #007bff;
+  bottom: -50px;
+  right: -40px;
+}
+
+.shape3 {
+  width: 240px;
+  height: 240px;
+  background: #8b00ff;
+  top: 40%;
+  left: 60%;
+}
+
+@keyframes floatProfile {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-40px); }
+  100% { transform: translateY(0); }
+}
+
+/* Lift content above shapes */
+.profile-title,
+.profile-details,
+.profile-flashcards,
+.start-chat-btn,
+.view-all-flashcards-btn {
+  position: relative;
+  z-index: 10;
+}
+
+/* =======================================================
+   LIGHT MODE SHAPES — softer & pastel
+======================================================= */
+
+.light .profile-shape {
+  opacity: 0.32 !important;
+}
+
+/* Pastel light colors */
+.light .shape1 {
+  background: #84b5d9 !important;
+}
+
+.light .shape2 {
+  background: #c21e1e !important;
+}
+
+.light .shape3 {
+  background: #3c125f !important;
+}
+
+/* Background of profile card already white */
+.light .profile-container {
+  backdrop-filter: blur(8px);
+}
+/* ==========================================================
+   LIGHT MODE STYLING FOR PROFILE PAGE
+   (These override dark mode when .light class is active)
+========================================================== */
+
+/* Main Profile Card */
+.light .profile-container {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid #cde6ff !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12),
+              0 0 15px rgba(0, 140, 255, 0.15) !important;
+  color: #1a1a1a !important;
+}
+
+/* Title */
+.light .profile-title {
+  color: #005bbb !important;
+  text-shadow: 0 0 8px rgba(0, 126, 255, 0.25);
+}
+
+/* Profile Details */
+.light .profile-details p {
+  color: #000 !important;
+  
+}
+.light .profile-details  {
+  background: linear-gradient(90deg, #b7e1ff, #e3d1d1) !important;
+  opacity: 1 !important;
+  
+}
+
+/* Flashcard Box */
+.light .flashcard-preview-card {
+  background: linear-gradient(90deg, #b7e1ff, #e3d1d1) !important;
+  opacity: 1 !important;
+  border: 1px solid #d6e6f7 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.light .flashcard-preview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+/* Flashcard Q/A text */
+.light .flashcard-question,
+.light .flashcard-answer {
+  color: #005fcc !important;
+}
+
+/* View All Flashcards Button */
+.light .view-all-flashcards-btn {
+  background: linear-gradient(90deg, #c0e4fe, #f5a7a7) !important;
+  color: black!important;
+
+  box-shadow: 0 4px 16px rgba(132, 146, 162, 0.45) !important;}
+
+.light .view-all-flashcards-btn:hover {
+  box-shadow: 0 0 20px #0b65a660 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Chat Button */
+.light .start-chat-btn {
+  background: linear-gradient(90deg, #c0e4fe, #f5a7a7) !important;
+  color: black!important;
+
+  box-shadow: 0 4px 16px rgba(94, 114, 136, 0.45) !important;}
+
+.light .start-chat-btn:hover {
+  box-shadow: 0 0 20px #0b65a660 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* “No Flashcards” text */
+.light .no-cards-msg {
+  color: #777 !important;
+}
+
+
+/* ==========================================================
+   FLASHCARDS PAGE — LIGHT MODE OVERRIDES
+========================================================== */
+
+/* Container becomes white glass card */
+.light .flashcards-page-container {
+  border: 1px solid #cde6ff !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12),
+              0 0 15px rgba(0, 140, 255, 0.15) !important;
+  color: #1a1a1a !important;
+  background: linear-gradient(90deg, #b7e1ff, #e3d1d1) !important;
+}
+
+/* Light Mode Glow Shapes */
+.light .flashcard-shape {
+  opacity: 0.18 !important;
+  filter: blur(120px) !important;
+}
+
+/* Soft Pastel Colors */
+.light .shape1 {
+  background: #a8e2ff !important;
+}
+
+.light .shape2 {
+  background: #d5baff !important;
+}
+
+.light .shape3 {
+  background: #c7e8ff !important;
+}
+
+/* Title */
+.light .flashcards-page-title {
+  color: #007bff !important;
+}
+
+/* Search Input in Light Mode */
+.light .flashcards-search-input {
+ background: black!important;
+  border: 1px solid #cfd9e8 !important;
+  color: black !important;
+}
+
+/* Flashcard Grid Card Light Mode */
+.light .flashcard-card {
+  background: black !important;
+  border: 1px solid #d6e6f7 !important;
+  color: black !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important;
+}
+
+
+/* Text Colors */
+.light .flashcard-question {
+  color: #ff6600 !important;
+}
+
+.light .flashcard-answer {
+  color: #007bff !important;
+}
+
+/* Delete Button */
+.light .delete-flashcard-btn {
+  background-color: #ff4d4f !important;
+}
+
+/* Back Button */
+.light .back-to-profile-btn {
+  background: #007bff !important;
+  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.35) !important;
+}
+
+.light .back-to-profile-btn:hover {
+  background: #0066d6 !important;
+}

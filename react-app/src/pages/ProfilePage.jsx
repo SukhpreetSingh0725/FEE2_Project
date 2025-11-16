@@ -27,6 +27,10 @@ function ProfilePage() {
 
   return (
     <div className="profile-container">
+        {/* Floating background shapes */}
+  <div className="profile-shape shape1"></div>
+  <div className="profile-shape shape2"></div>
+  <div className="profile-shape shape3"></div>
       <h1 className="profile-title">Welcome, {user.name || 'User'} 👋</h1>
 
       <div className="profile-details">

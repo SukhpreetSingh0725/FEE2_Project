@@ -8,6 +8,7 @@ main{
   max-width: 620px;
   margin: 9rem auto 5rem auto;
   padding: 2.8rem 3rem;
+  min-height: 880px;
 
   background: rgba(25, 25, 35, 0.6);
   backdrop-filter: blur(16px);
@@ -29,7 +30,7 @@ main{
 #contact-glass h1 {
   font-size: 2.7rem;
   font-weight: 800;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
   color: #00e5ff;
   text-shadow: 0 0 12px #00e5ffb7;
 }
@@ -41,8 +42,8 @@ main{
 #contact-form input,
 #contact-form textarea {
   width: 100%;
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.4rem;
+  padding: 1.6rem 1.2rem;
+  margin-bottom: 2rem;
 
   border-radius: 12px;
   border: 2px solid rgba(0, 229, 255, 0.1);
@@ -50,7 +51,7 @@ main{
   background: rgba(20, 20, 30, 0.7);
   color: #e7ecf7;
 
-  font-size: 1rem;
+  font-size: 20px;
   font-weight: 500;
 
   box-shadow:
@@ -85,8 +86,9 @@ main{
 #contact-form button {
   width: 100%;
   padding: 1rem 0;
+  margin-top: 20px;
 
-  font-size: 1.2rem;
+  font-size: 25px;
   font-weight: 700;
 
   color: #0a0a0a;
@@ -125,3 +127,81 @@ main{
     font-size: 2rem;
   }
 }
+
+
+/* ===================================================================
+   LIGHT MODE FOR CONTACT PAGE (Overrides Only)
+=================================================================== */
+
+/* Page Background */
+.light main {
+  background: linear-gradient(to bottom, #ffffff, #f3f7fb) !important;
+}
+
+/* CONTACT CARD */
+.light #contact-glass {
+  background: linear-gradient(90deg, #99afbe, #d1a1a1) !important;
+  color: #1a1a1a !important;
+
+  border: 1px solid #d7e3f5 !important;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 0 10px rgba(0, 140, 255, 0.15) !important;
+
+  backdrop-filter: blur(14px) !important;
+}
+
+/* TITLE LIGHT MODE */
+.light #contact-glass h1 {
+  color: #005bbb !important;
+  text-shadow: 0 0 8px rgba(0, 119, 255, 0.25) !important;
+}
+
+/* ================================
+   INPUT + TEXTAREA (Light Mode)
+================================ */
+
+.light #contact-form input,
+.light #contact-form textarea {
+  background: #ffffff !important;
+  border: 2px solid #dbe3ef !important;
+  color: #1a1a1a !important;
+  font-size: 20px;
+
+  box-shadow:
+    inset 1px 1px 3px rgba(0, 0, 0, 0.06),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.4) !important;
+}
+
+.light #contact-form input::placeholder,
+.light #contact-form textarea::placeholder {
+  color: #9aa4b4 !important;
+}
+
+/* Focus Glow (light, premium blue) */
+.light #contact-form input:focus,
+.light #contact-form textarea:focus {
+  border-color: #007bff !important;
+  box-shadow:
+    0 0 8px rgba(0, 123, 255, 0.55),
+    inset 1px 1px 5px rgba(0, 123, 255, 0.25),
+    inset -1px -1px 5px rgba(0, 123, 255, 0.25) !important;
+}
+
+/* ================================
+   BUTTON
+================================ */
+
+.light #contact-form button {
+  background: linear-gradient(90deg, #c0e4fe, #ddcccc) !important;
+  color: black!important;
+
+  box-shadow: 0 4px 16px rgba(0, 123, 255, 0.45) !important;
+}
+
+.light #contact-form button:hover {
+ 
+  box-shadow: 0 0 20px #0b65a660 !important;
+  transform: translateY(-2px) !important;
+}
+

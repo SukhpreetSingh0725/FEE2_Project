@@ -83,6 +83,7 @@
   margin-bottom: 25px;
   font-size: 2rem;
   font-weight: 700;
+  margin-top: 25px;
 }
 
 /* VALUE CARDS */
@@ -94,7 +95,7 @@
 }
 
 .value-card {
-  width: 300px;
+  width: 350px;
   padding: 20px;
   background: rgba(0,0,0,0.3);
   border: 1px solid rgba(0, 200, 255, 0.2);
@@ -153,7 +154,7 @@
   display: inline-block;   /* FIX: allows centering */
   margin-top: 15px;
   padding: 12px 32px;
-  font-size: 1.1rem;
+  font-size: 22px;
   font-weight: 700;
   color: #000;
   background: #00eaff;
@@ -189,3 +190,101 @@
     align-items: center;
   }
 }
+
+/* ============================================================
+   LIGHT MODE OVERRIDES FOR ABOUT PAGE
+   ============================================================ */
+
+   .light .about-page-wrapper {
+    background: #ffffff ;
+    color: #000 !important;
+    
+  }
+  
+  /* FLOATING GRADIENT BLOBS (KEEP GLOW, FIX SQUARE ISSUE) */
+  .light .about-bg-shape {
+    filter: blur(120px) !important;
+    opacity: 0.30 !important;
+  }
+  
+  .light .shape1 {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  
+  .light .shape2 {
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+  
+  /* MAIN CONTENT CARD */
+  .light .about-content {
+    background: rgba(3, 200, 255, 0.06)!important;
+    border: 3px solid rgba(3, 7, 8, 0.089);
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.06) !important;
+    
+  }
+  
+  /* HERO TITLES */
+  .light .about-title {
+    color: #005bbb !important;
+    text-shadow: 0 0 6px rgba(0, 119, 255, 0.25) !important;
+  }
+  
+  .light .about-subtitle {
+    color: #000 !important;
+  }
+  
+  /* SECTION HEADING */
+  .light .section-title {
+    color: #005bbb !important;
+  }
+  
+  /* VALUE CARDS */
+  .light .value-card {
+    background: linear-gradient(90deg, #b7e1ff, #e3d1d1) !important;
+    border: 1px solid #b8b6b6 !important;
+    backdrop-filter: blur(5px) !important;
+    color: #000 !important;
+
+  }
+  
+  .light .value-card p {
+    color: #000 !important;
+    font-size: 18px;
+  }
+  
+  .light .value-card i {
+    color: #0077ff !important;
+  }
+  
+  .light .value-card:hover {
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15) !important;
+  }
+  
+  /* TECHNOLOGY SECTION TEXT */
+  .light .tech-text {
+    color: #000 !important;
+  }
+  
+  /* TECHNOLOGY ICONS */
+  .light .tech-icons i {
+    color: #0077ff !important;
+  }
+  
+  .light .tech-icons i:hover {
+    color: #0099ff !important;
+  }
+  
+  /* CTA BUTTON */
+  .light .cta-btn {
+    background: linear-gradient(90deg, #c0e4fe, #ddcccc) !important;
+    color: black!important;
+    border: 1px solid #b8b6b6 !important;
+    font-size: 22px;
+   
+  }
+  
+  .light .cta-btn:hover {
+    box-shadow: 0 0 20px #0b65a660 !important;
+  }
+  

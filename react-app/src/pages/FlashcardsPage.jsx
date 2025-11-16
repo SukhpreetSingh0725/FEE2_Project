@@ -62,7 +62,10 @@ function FlashcardsPage() {
 
   return (
     <div className="flashcards-page-container">
-      <h1 className="flashcards-page-title">All Saved Flashcards</h1>
+    <div className="flashcard-shape shape1"></div>
+  <div className="flashcard-shape shape2"></div>
+  <div className="flashcard-shape shape3"></div>
+      <h1 className="flashcards-page-title">Your  Flashcards</h1>
 
       {/* Search input */}
       <input
