@@ -17,7 +17,7 @@ import ProfilePage from './pages/ProfilePage';
 import FlashcardsPage from './pages/FlashcardsPage';
 
 import './styles/navbar.css';
-import './styles/login.css';
+import './styles/Login.css';
 import './styles/chat.css';
 import './styles/contact.css';
 import './styles/about.css';
