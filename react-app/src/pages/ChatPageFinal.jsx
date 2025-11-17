@@ -148,12 +148,12 @@ export default function ChatPage() {
 
   const handleSend = async (e) => {
     e.preventDefault();
-
+  
     if (!input.trim()) return;
-
+  
+    // guest logic
     if (!isLoggedIn) {
       const count = Number(localStorage.getItem("sparkq_guest_message_count"));
-
       if (count >= MAX_GUEST_MESSAGES) {
         const result = await Swal.fire({
           title: "Limit Reached",
@@ -162,99 +162,80 @@ export default function ChatPage() {
           showCancelButton: true,
           confirmButtonText: "Login",
         });
-
+  
         if (result.isConfirmed) navigate("/login");
         return;
       }
-
       const newCount = count + 1;
       setGuestMessageCount(newCount);
       localStorage.setItem("sparkq_guest_message_count", newCount);
     }
-
+  
+    // push user message
     const userMsg = {
-      id: messages.length + 1,
+      id: Date.now(),
       sender: "user",
       text: input,
     };
-
     setMessages((prev) => [...prev, userMsg]);
-
+  
     const prompt = input;
     setInput("");
     setLoading(true);
-// Save user's message in conversation history
-// Build messages first (correct way)
-const updatedMessages = [
-  { role: "system", content: "You are SparkQ, a helpful AI assistant." },
-  ...chatHistory,
-  { role: "user", content: prompt }
-];
-
-// NOW update chatHistory after build
-setChatHistory(updatedMessages.slice(1)); // remove system prompt
-
-
-try {
-  setAiThinking(true);
-
-  const abort = new AbortController();
-  setController(abort);
-
-  const stream = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: updatedMessages,
-    stream: true,
-    // signal: abort.signal
-  });
-
-  let fullReply = "";
-  const newId = Date.now();
-
-  // Add empty AI message first
-  setMessages((prev) => [
-    ...prev,
-    { id: newId, sender: "ai", text: "" }
-  ]);
-
-  for await (const chunk of stream) {
-    const token = chunk.choices?.[0]?.delta?.content || "";
-    fullReply += token;
-
-    setMessages((prev) =>
-      prev.map((msg) =>
-        msg.id === newId ? { ...msg, text: fullReply } : msg
-      )
-    );
-  }
-
-  // Save AI reply to memory
-  setChatHistory((prev) => [
-    ...prev,
-    { role: "assistant", content: fullReply }
-  ]);
-
-  setAiThinking(false);
-  setLoading(false);
+    setAiThinking(true);
   
-  } catch (error) {
-    console.error(error);
+    // Build conversation history to send to backend
+    const updatedMessages = [
+      { role: "system", content: "You are SparkQ, a helpful AI assistant." },
+      ...chatHistory,
+      { role: "user", content: prompt }
+    ];
   
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: Date.now(),
-        sender: "ai",
-        text: "⚠️ Error: Unable to connect to OpenAI."
+    try {
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: updatedMessages })
+      });
+  
+      if (!res.ok) {
+        setMessages(prev => [
+          ...prev,
+          { id: Date.now(), sender: "ai", text: "⚠️ Error: Server issue." }
+        ]);
+        setLoading(false);
+        setAiThinking(false);
+        return;
       }
-    ]);
   
-    setAiThinking(false);
+      const data = await res.json();
+      const reply = data.reply || "⚠️ No response";
+  
+      // show reply
+      setMessages(prev => [
+        ...prev,
+        { id: Date.now(), sender: "ai", text: reply }
+      ]);
+  
+      // save history
+      setChatHistory(prev => [
+        ...prev,
+        { role: "assistant", content: reply }
+      ]);
+  
+    } catch (err) {
+      console.error(err);
+  
+      setMessages(prev => [
+        ...prev,
+        { id: Date.now(), sender: "ai", text: "⚠️ Unable to connect to OpenAI." }
+      ]);
+    }
+  
     setLoading(false);
-  }
-  
+    setAiThinking(false);
   };
-
+  
   return (
     <div className="chat-fixed-layout">
     <div className="h-full  w-full flex bg-gray-100 dark:bg-black text-black dark:text-white pt-20 ">
