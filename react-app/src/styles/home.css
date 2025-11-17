@@ -250,10 +250,10 @@ main {
 
 .premium-glow {
   position: absolute;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
+  width: 300%;
+  height: 300%;
+  top: -100%;
+  left: -100%;
   background: conic-gradient(
     transparent,
     rgba(0, 234, 255, 0.5),
@@ -719,9 +719,9 @@ main {
 /* src/styles/profile.css */
 
 .profile-container {
-  min-width: 550px;
-  margin: 100px auto;
-  padding: 25px;
+  min-width: 450px!important;
+  margin: 110px auto!important;
+  padding: 25px!important;
   background-color: #1a1a1a;
   border-radius: 12px;
   border: 1px solid #00aaff;
@@ -843,6 +843,7 @@ main {
   position: relative;
   overflow: hidden; /* so shapes don't overflow */
   z-index: 1;
+
 }
 
 /* Base shape class */
@@ -914,7 +915,8 @@ main {
   text-align: center;
   color: #00aaff;
   margin-bottom: 25px;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  font-weight: bold;
 }
 
 /* Search Input */
@@ -995,6 +997,7 @@ main {
   font-size: 1rem;
   font-weight: 600;
   border: none;
+  margin-bottom: 15px;
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -1083,14 +1086,14 @@ main {
 
 /* FLOATING SHAPES -> keep blur + glow in light mode */
 .light .floating-shape {
-  filter: blur(90px) !important;
-  opacity: 0.35 !important;
+  filter: blur(70px) !important;
+  opacity: 5 !important;
 }
 
 /* Make shapes bright but soft (no solid square issue) */
-.light .shape1 { background: #00c3ff !important; }
-.light .shape2 { background: #0080ff !important; }
-.light .shape3 { background: #7b00ff !important; }
+.light .shape1 { background: #0ca3d1 !important; }
+.light .shape2 { background: #d20fc5 !important; }
+.light .shape3 { background: #290452 !important; }
 
 /* HERO SECTION */
 .light .hero-title {
@@ -1257,7 +1260,8 @@ main {
 
 /* Main Profile Card */
 .light .profile-container {
-  background: rgba(255, 255, 255, 0.85) !important;
+  background: linear-gradient(90deg, #81cbff, #ec9999) !important;
+  opacity: 1 !important;
   border: 1px solid #cde6ff !important;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12),
               0 0 15px rgba(0, 140, 255, 0.15) !important;
@@ -1276,7 +1280,7 @@ main {
   
 }
 .light .profile-details  {
-  background: linear-gradient(90deg, #b7e1ff, #e3d1d1) !important;
+  background: linear-gradient(90deg, #c1dff4, #f1dfdf) !important;
   opacity: 1 !important;
   
 }
@@ -1336,7 +1340,7 @@ main {
 
 /* Container becomes white glass card */
 .light .flashcards-page-container {
-  border: 1px solid #cde6ff !important;
+  border: 1px solid #126fcd !important;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12),
               0 0 15px rgba(0, 140, 255, 0.15) !important;
   color: #1a1a1a !important;
@@ -1351,11 +1355,11 @@ main {
 
 /* Soft Pastel Colors */
 .light .shape1 {
-  background: #a8e2ff !important;
+  background: #93d8fb !important;
 }
 
 .light .shape2 {
-  background: #d5baff !important;
+  background: #6938b8 !important;
 }
 
 .light .shape3 {
@@ -1365,6 +1369,8 @@ main {
 /* Title */
 .light .flashcards-page-title {
   color: #007bff !important;
+  font-size: 35px;
+  font-weight: bold;
 }
 
 /* Search Input in Light Mode */
@@ -1399,10 +1405,14 @@ main {
 
 /* Back Button */
 .light .back-to-profile-btn {
-  background: #007bff !important;
-  box-shadow: 0 4px 14px rgba(0, 123, 255, 0.35) !important;
+  background: linear-gradient(90deg, #99bcd6, #dc6767) !important;
+  color: black!important;
+  margin-bottom: 15px;
+
+  box-shadow: 0 4px 16px rgba(132, 146, 162, 0.45) !important;
 }
 
 .light .back-to-profile-btn:hover {
-  background: #0066d6 !important;
+  box-shadow: 0 0 20px #0b65a660 !important;
+  transform: translateY(-2px) !important;
 }

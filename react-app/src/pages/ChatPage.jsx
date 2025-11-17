@@ -5,9 +5,16 @@ import React, { useState, useEffect, useRef } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-import axios from "axios";
+// import axios from "axios";
 import { marked } from "marked";
-import { useTheme } from "../context/ThemeContext";
+import OpenAI from "openai";
+const client = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true
+});
+
+
+
 
 marked.setOptions({ breaks: true });
 
@@ -21,7 +28,7 @@ const getInitialFlashcards = (userId) => {
 export default function ChatPage() {
   const navigate = useNavigate();
   const { isLoggedIn, user } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  // const { theme, toggleTheme } = useTheme();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [messages, setMessages] = useState([
@@ -34,6 +41,12 @@ export default function ChatPage() {
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [aiThinking, setAiThinking] = useState(false);
+  const [controller, setController] = useState(null);
+  const [chatHistory, setChatHistory] = useState([]);
+
+
+
 
   const [flashcards, setFlashcards] = useState(() =>
     getInitialFlashcards(user?.id)
@@ -170,34 +183,87 @@ export default function ChatPage() {
     const prompt = input;
     setInput("");
     setLoading(true);
+// Save user's message in conversation history
+// Build messages first (correct way)
+const updatedMessages = [
+  { role: "system", content: "You are SparkQ, a helpful AI assistant." },
+  ...chatHistory,
+  { role: "user", content: prompt }
+];
 
-    try {
-      const res = await axios.post("http://localhost:5000/api/ask", { prompt });
-      const reply = res.data.reply || "I didn’t understand that.";
+// NOW update chatHistory after build
+setChatHistory(updatedMessages.slice(1)); // remove system prompt
 
-      setMessages((prev) => [
-        ...prev,
-        { id: prev.length + 1, sender: "ai", text: reply },
-      ]);
-    } catch (err) {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: prev.length + 1,
-          sender: "ai",
-          text: "⚠️ Error connecting to SparkQ server.",
-        },
-      ]);
-    }
 
+try {
+  setAiThinking(true);
+
+  const abort = new AbortController();
+  setController(abort);
+
+  const stream = await client.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: updatedMessages,
+    stream: true,
+    // signal: abort.signal
+  });
+
+  let fullReply = "";
+  const newId = Date.now();
+
+  // Add empty AI message first
+  setMessages((prev) => [
+    ...prev,
+    { id: newId, sender: "ai", text: "" }
+  ]);
+
+  for await (const chunk of stream) {
+    const token = chunk.choices?.[0]?.delta?.content || "";
+    fullReply += token;
+
+    setMessages((prev) =>
+      prev.map((msg) =>
+        msg.id === newId ? { ...msg, text: fullReply } : msg
+      )
+    );
+  }
+
+  // Save AI reply to memory
+  setChatHistory((prev) => [
+    ...prev,
+    { role: "assistant", content: fullReply }
+  ]);
+
+  setAiThinking(false);
+  setLoading(false);
+  
+  } catch (error) {
+    console.error(error);
+  
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        sender: "ai",
+        text: "⚠️ Error: Unable to connect to OpenAI."
+      }
+    ]);
+  
+    setAiThinking(false);
     setLoading(false);
+  }
+  
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-100 dark:bg-black text-black dark:text-white pt-20">
+    <div className="chat-fixed-layout">
+    <div className="h-full  w-full flex bg-gray-100 dark:bg-black text-black dark:text-white pt-20 ">
+  
       {/* Sidebar */}
       {isSidebarOpen && (
-        <aside className="w-80 sm:w-96 bg-gray-200 dark:bg-gray-900 border-r border-gray-400 dark:border-gray-700 h-[calc(100vh-80px)] sticky left-0 top-20 p-5 overflow-y-auto rounded-lg ml-3">
+     <aside className="flashcard-sidebar w-80 sm:w-96 h-full p-5 overflow-y-auto rounded-lg ml-3">
+
+
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Flashcards</h2>
             <button onClick={toggleSidebar} className="text-gray-500 hover:text-white">✕</button>
@@ -210,7 +276,8 @@ export default function ChatPage() {
               placeholder="Question"
               value={newQuestion}
               onChange={(e) => setNewQuestion(e.target.value)}
-              className="w-full p-3 rounded bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700"
+              className="flashcard-item p-3 rounded border"
+
             />
 
             <textarea
@@ -218,7 +285,8 @@ export default function ChatPage() {
               placeholder="Answer"
               value={newAnswer}
               onChange={(e) => setNewAnswer(e.target.value)}
-              className="w-full p-3 rounded bg-white dark:bg-gray-800 border border-gray-400 dark:border-gray-700"
+             className="flashcard-item p-3 rounded border"
+
             />
 
             <button className="w-full bg-blue-600 hover:bg-blue-700 p-2 rounded font-semibold text-white">
@@ -262,7 +330,7 @@ export default function ChatPage() {
             {flashcards.length > 0 && (
               <button
                 onClick={handleClearFlashcards}
-                className="text-red-500 font-semibold text-sm mt-2"
+                className="w-full text-center block bg-gradient-to-r from-red-600 to-red-600 text-white py-2 rounded font-semibold mt-2"
               >
                 Clear All
               </button>
@@ -282,27 +350,24 @@ export default function ChatPage() {
           {!isSidebarOpen && (
             <button
               onClick={toggleSidebar}
-              className="px-3 py-1 bg-gray-300 dark:bg-gray-800 rounded"
+              className=" virat px-3 py-1 bg-gray-300 dark:bg-gray-800 rounded"
             >
               Open Flashcards
             </button>
           )}
 
-          <button
-            onClick={toggleTheme}
-            className="px-3 py-2 bg-gray-300 dark:bg-gray-800 rounded border border-gray-500"
-          >
-            {theme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode"}
-          </button>
+      
         </div>
 
         {/* Chat Header */}
-        <header className="p-4 bg-gray-300 dark:bg-gray-800 rounded-md mb-3">
+        <header className="chat-header-container p-4 rounded-md mb-3">
+
           <h1 className="text-2xl font-bold">SparkQ Chat</h1>
         </header>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto bg-white dark:bg-gray-900 p-5 rounded-lg shadow-md space-y-4">
+        <div className="chat-main-container flex-1 overflow-y-auto p-5 rounded-lg shadow-md space-y-4">
+
           {messages.map((msg) => (
             <div
               key={msg.id}
@@ -311,12 +376,11 @@ export default function ChatPage() {
               }`}
             >
               {msg.sender === "user" ? (
-                <div className="bg-blue-600 text-white px-4 py-2 rounded-xl max-w-lg shadow">
+                <div className="user-message-bubble">
                   {msg.text}
                 </div>
               ) : (
-                <div
-                  className="bg-gray-200 dark:bg-gray-800 text-black dark:text-white px-4 py-2 rounded-xl max-w-lg shadow"
+                <div className="ai-message-bubble"
                   dangerouslySetInnerHTML={{
                     __html: marked.parse(msg.text, {
                       mangle: false,
@@ -328,7 +392,9 @@ export default function ChatPage() {
             </div>
           ))}
 
-          {loading && <p className="text-gray-500 dark:text-gray-400">Thinking...</p>}
+{aiThinking && (
+  <div className="text-gray-400 text-sm px-4">SparkQ is typing...</div>
+)}
 
           <div ref={messagesEndRef} />
         </div>
@@ -336,22 +402,38 @@ export default function ChatPage() {
         {/* Input */}
         <form
           onSubmit={handleSend}
-          className="mt-3 p-3 bg-gray-300 dark:bg-gray-800 rounded-md flex gap-3"
+          className="input-container mt-3 p-3 rounded-md flex gap-3"
         >
           <input
             type="text"
             placeholder="Ask me anything..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onBlur={() => {}}   // <── ADD THIS (prevents auto refocusing)
+            autoComplete="off"
+            autoCorrect="off"
             className="flex-1 px-4 py-2 rounded bg-white dark:bg-gray-900 border border-gray-400 dark:border-gray-700 text-black dark:text-white"
           />
 
           <button
             disabled={loading}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded font-semibold text-white"
+            className="send-button px-6 py-2 rounded font-semibold text-white"
           >
             Send
           </button>
+          {controller && (
+  <button
+  onClick={() => {
+    controller.abort();
+    setAiThinking(false);
+    setController(null);
+  }}
+    className="px-3 py-1 bg-red-600 text-white rounded shadow hover:bg-red-700"
+  >
+    Stop
+  </button>
+)}
+
         </form>
 
         {/* Guest Counter */}
@@ -363,6 +445,7 @@ export default function ChatPage() {
           </p>
         )}
       </main>
+    </div>
     </div>
   );
 }

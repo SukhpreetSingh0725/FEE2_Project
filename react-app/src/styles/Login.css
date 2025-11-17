@@ -2,12 +2,12 @@
  .l-container {
   /* FIX: Remove fixed width/height and let content define it, while centering the block */
   width: 500px; /* Keep this max size for the card */
-  min-height: 580px; /* Use min-height to ensure the card can grow */
+  min-height: 610px; /* Use min-height to ensure the card can grow */
   perspective: 1000px;
   position: relative;
   
   /* FIX: Center the container horizontally on the page */
-  margin: 110px auto;
+  margin: 140px auto;
 }
 
 .card {
@@ -125,3 +125,66 @@
   }
 }
 
+
+
+/* =======================================
+   LIGHT MODE FOR LOGIN / SIGNUP PAGE
+======================================= */
+
+.light .l-container {
+  /* Soft white glass effect */
+  background: transparent !important;
+}
+
+.light .l-form-container {
+  background: linear-gradient(90deg, #90b8d5, #ec9999) !important;
+  border: 1px solid #d4eaff !important;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1),
+              0 0 20px rgba(0, 132, 255, 0.25) !important;
+
+  text-shadow: none !important;
+  color: #000 !important;
+}
+
+/* Title */
+.light .l-form-container h1 {
+  color: #0066cc !important;
+  text-shadow: 0 0 5px rgba(0, 133, 255, 0.25) !important;
+}
+
+/* Inputs */
+.light .l-form-container input {
+  background: #ffffff !important;
+  border: 1px solid #cdd7e3 !important;
+  color: #000 !important;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05) inset;
+}
+
+/* Buttons */
+.light .l-form-container button {
+  background: linear-gradient(90deg, #c0e4fe, #f5a7a7) !important;
+  color: black!important;
+
+  box-shadow: 0 4px 16px rgba(132, 146, 162, 0.45) !important;
+}
+
+.light .l-form-container button:hover {
+  box-shadow: 0 0 20px #0b65a660 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Links */
+.light .l-form-container a {
+  color: #0056b3 !important;
+}
+
+/* Social icons */
+.light .social-icons a {
+  color: #007bff !important;
+}
+
+/* Light Mode Backfaces */
+.light .l-signup-container {
+  background: linear-gradient(90deg, #90b8d5, #ec9999) !important;
+  border: 1px solid #d4eaff !important;
+}

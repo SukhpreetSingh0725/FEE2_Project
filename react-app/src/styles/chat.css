@@ -6,37 +6,18 @@
 |--------------------------------------------------------------------------
 */
 
+/* FIXED CHAT LAYOUT (Prevents page from expanding) */
+.chat-fixed-layout {
+    height: calc(100vh - 9px);   /* Subtract navbar height */
+    overflow: hidden;             
+    display: flex;
+    margin-top: 4px!important;
+}
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-#chat-interface {
-    flex-grow: 1;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 90px auto 40px auto; 
-    width: 100%; 
-    box-sizing: border-box; 
-}
 
-/* --- Container Wrapper for Chat and Flashcards (The Gemini Layout) --- */
-.chat-container-wrapper {
-    display: grid;
-    /* CRITICAL: Defines the two columns. Sidebar fixed 350px, Chat 1fr. */
-    grid-template-columns: 350px 1fr;
-    gap: 20px;
-    min-height: 80vh;
-    transition: grid-template-columns 0.3s ease-in-out;
-    overflow: hidden;
-    width: 85%;
-    margin: auto;
-}
-
-.sidebar-closed.chat-container-wrapper {
-    /* When closed, the sidebar column collapses to 0px, making the chat 1fr (full width). */
-    grid-template-columns: 0px 1fr; 
-    gap: 0;
-}
 
 
 /*
@@ -50,7 +31,7 @@
     background: none;
     color: #00aaff;
     border: 1px solid #00aaff;
-    padding: 5px 10px;
+    padding: 6px 10px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -67,7 +48,7 @@
     background: #00aaff;
     color: white;
     border: none;
-    padding: 8px 7px;
+    padding: 9px 7px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -90,22 +71,29 @@
 */
 
 .flashcards-sidebar {
-    width: 350px; 
+    width: 350px;
+    height: 100%;
+    overflow-y: auto;
     flex-shrink: 0;
     padding: 17px;
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.3); 
-    border: 1px solid #00aaff;
-    overflow-y: auto;
-    
-    transition: transform 0.3s ease-in-out; 
 }
+
 
 .sidebar-closed .flashcards-sidebar {
     /* Hides the sidebar content visually when column width is 0 */
     transform: translateX(-100%); 
     border: none;
     padding: 0;
+}
+.chat-container-wrapper {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    height: 100%;          /* <── ADD */
+    overflow: hidden;      /* <── ADD */
+}
+.sidebar-closed.chat-container-wrapper {
+    grid-template-columns: 0px 1fr;
+    overflow: hidden;      /* <── ADD */
 }
 
 .sidebar-header {
@@ -282,12 +270,11 @@
 
 .message-list {
     flex-grow: 1;
-    max-height: calc(80vh - 150px);
-    padding: 15px;
+    height: 100%;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+    padding: 15px;
 }
+
 
 /* Customize scrollbar (optional, for aesthetics) */
 .message-list::-webkit-scrollbar {
@@ -387,7 +374,139 @@
     background-color: #008fcc;
 }
 
-
 @media (max-width: 600px){
 
+}
+
+
+.chat-header-container {
+    background-color: #362f2f;
+    border: 2px solid rgb(43, 55, 226);
+}
+
+.light .chat-header-container {
+    background: linear-gradient(90deg, #81cbff, #ec9999) !important;
+}
+
+
+.chat-main-container {
+    background-color: #362f2f;   
+    color: #1A1A1A;
+}
+
+.light .chat-main-container {
+    background: linear-gradient(90deg, #81cbff, #ec9999) !important;
+
+    color: #E5E7EB;
+}
+
+/* USER MESSAGE (sent by you) */
+.user-message-bubble {
+    background-color: #E8ECF3;       /* Light mode bubble color */
+    color: #1A1A1A;
+    font-weight: bold;
+    padding: 10px 14px;
+    border-radius: 14px;
+    max-width: 70%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.light .user-message-bubble {
+    background-color: #81cbff;       /* Dark mode bubble color */
+    color: #030303;
+    font-weight: bold;
+    
+}
+
+/* AI MESSAGE (received from AI) */
+.ai-message-bubble {
+    background-color: #E8ECF3;       /* Light mode AI bubble */
+    color: #1A1A1A;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 14px;
+    max-width: 70%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.light .ai-message-bubble {
+    background-color: #f89696;       /* Dark mode AI bubble */
+    color: #000;
+   
+}
+
+
+
+/* SEND BUTTON */
+.send-button {
+    background: linear-gradient(90deg, #4a97ce, #d46a6a) !important;
+    color: #000;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.send-button:hover {
+    background-color: #005BBB;      /* Light mode hover */
+    transform: scale(1.03);
+}
+
+.light .send-button {
+    background-color: #2563EB;      /* Dark mode color */
+}
+
+.light .send-button:hover {
+    background-color: #1D4ED8;      /* Dark mode hover */
+}
+
+/* INPUT CONTAINER (the gray box around input + send button) */
+.input-container {
+    background-color: #362f2f;        /* Light mode input container */
+}
+
+.light .input-container {
+    background: linear-gradient(90deg, #81cbff, #ec9999) !important;      /* Dark mode input container */
+}
+
+/* FLASHCARD SIDEBAR */
+.flashcard-sidebar {
+    background-color:  #362f2f;     /* Light mode background */
+    border-right: 1px solid #CBD5E1;  /* Light mode border */
+    color: #ffffff;
+}
+
+/* DARK MODE SIDEBAR */
+.light .flashcard-sidebar {
+    background: linear-gradient(90deg, #81cbff, #ec9999) !important;      /* Dark mode input container */
+    border-right: 1px solid #1E293B;
+    color: #000000;
+}
+
+
+
+.flashcard-item {
+    background-color: #f1ecec;         /* Light card background */
+    border-color: #CBD5E1;
+    width: 100%;
+    color: black;
+}
+
+.light .flashcard-item {
+    background-color: #1E293B;         /* Dark card background */
+    border-color: #334155;
+    color: white;
+}
+
+
+.virat {
+    background-color: #362f2f;
+    border: 2px solid rgb(43, 55, 226);
+    padding: 9px 25px;
+    color: white;
+    font-weight: bold;
+}
+
+.light .virat{
+    background: linear-gradient(90deg, #81cbff, #ec9999) !important;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
 }
