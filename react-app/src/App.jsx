@@ -9,7 +9,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 
 import HomePage from './pages/HomePage';
-import ChatPage from './pages/ChatPAge';
+import ChatPage from './pages/ChatPageFinal';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
