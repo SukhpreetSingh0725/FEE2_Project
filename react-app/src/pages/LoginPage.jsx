@@ -17,7 +17,7 @@ import {
     // If you are using an older version of Firebase or a different setup,
     // the name might be different, but this is standard for modular Firebase v9+.
     signInWithPopup
-} from '../firebaseConfig.js'; 
+} from '../firebaseConfig'; 
 
 function LoginPage() {
     const navigate = useNavigate();
